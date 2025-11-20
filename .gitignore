@@ -1,0 +1,59 @@
+# ================
+# Unity generated
+# ================
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+UserSettings/
+
+# =============
+# Asset Store
+# =============
+[Pp]ackages/com.unity.collab-proxy/
+[Pp]ackages/com.unity.services.core/
+[Pp]ackages/com.unity.analytics/
+
+# ============
+# IDE / editor
+# ============
+.vs/
+.idea/
+.vscode/
+
+# ============
+# OS files
+# ============
+.DS_Store
+Thumbs.db
+
+# =============
+# Visual Studio
+# =============
+*.csproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+
+# ============
+# Crash / debug
+# ============
+*.pidb
+*.mdb
+*.opendb
+
+# ============
+# Build output
+# ============
+*.apk
+*.aab
+*.ipa
+*.exe
+*.app
+*.xcodeproj
+*.xcworkspace
