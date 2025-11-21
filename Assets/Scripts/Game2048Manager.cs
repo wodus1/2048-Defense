@@ -14,8 +14,8 @@ public class Game2048Manager : MonoBehaviour
     private InputState inputState = InputState.Idle;
     private Vector2 startTouchPos;
     private float dragThreshold = 50f;
-    
-    public int[,] Map => map;
+
+    public List<TileUI> Tiles => tiles;
     
     void Awake()
     {
@@ -29,11 +29,11 @@ public class Game2048Manager : MonoBehaviour
         switch (inputState)
         {
             case InputState.Idle:
-                DetectDragStart();
+                DragStart();
                 break;
 
             case InputState.Dragging:
-                DetectDragEnd();
+                DragEnd();
                 break;
         }
     }
@@ -65,7 +65,7 @@ public class Game2048Manager : MonoBehaviour
         }
     }
     
-    private void DetectDragStart()
+    private void DragStart()
     {
         if (Pointer.current == null)
             return;
@@ -78,7 +78,7 @@ public class Game2048Manager : MonoBehaviour
         }
     }
 
-    private void DetectDragEnd()
+    private void DragEnd()
     {
         if (Pointer.current == null)
             return;
@@ -195,7 +195,6 @@ public class Game2048Manager : MonoBehaviour
                 {
                     moved = true;
                     map[r, c] = newValue;
-                    Debug.Log(map[r, c]+" " + r + " " +c);
                 }
 
                 mergeIdx++;

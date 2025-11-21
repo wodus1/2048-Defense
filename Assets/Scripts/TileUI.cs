@@ -33,6 +33,8 @@ public class TileUI : MonoBehaviour // 타일 ui view
 
     public void SetValue(int value)
     {
+        this.value = value;
+        
         if(value == 0)
             valueText.text = "";
         else
