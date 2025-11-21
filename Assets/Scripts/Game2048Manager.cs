@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
+using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 enum Direction { left, right, up, down }
@@ -68,36 +67,31 @@ public class Game2048Manager : MonoBehaviour
     
     private void DetectDragStart()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            startTouchPos = Input.mousePosition;
-            inputState = InputState.Dragging;
+        if (Pointer.current == null)
             return;
-        }
-        
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+
+        if (Pointer.current.press.wasPressedThisFrame)
         {
-            startTouchPos = Input.GetTouch(0).position;
+            startTouchPos = Pointer.current.position.ReadValue();
+
             inputState = InputState.Dragging;
         }
     }
 
     private void DetectDragEnd()
     {
-        Vector2 currentPos = Vector2.zero;
+        if (Pointer.current == null)
+            return;
         
-        if (Input.GetMouseButton(0))
+        if (!Pointer.current.press.isPressed)
         {
-            currentPos = Input.mousePosition;
+            inputState = InputState.Idle;
+            return;
         }
         
-        if (Input.touchCount > 0)
-        {
-            currentPos = Input.GetTouch(0).position;
-        }
-        
+        Vector2 currentPos = Pointer.current.position.ReadValue();
         Vector2 delta = currentPos - startTouchPos;
-
+        
         if (delta.magnitude < dragThreshold)
             return;
         
@@ -110,18 +104,12 @@ public class Game2048Manager : MonoBehaviour
         {
             dir = (delta.y > 0) ? Direction.up : Direction.down;
         }
-        
-        bool moved = MoveTile(dir);
 
+        bool moved = MoveTile(dir);
 
         if (moved)
         {
             SpawnRandomTile();
-            inputState = InputState.Idle;
-        }
-        else
-        {
-            inputState = InputState.Idle;
         }
         
         inputState = InputState.Idle;
@@ -131,38 +119,28 @@ public class Game2048Manager : MonoBehaviour
     {
         bool moved = false;
 
-        if (dir == Direction.right)
+        switch (dir)
         {
-            
-            for (int y = 0; y < 4; y++)
-            {
-                int[] line = new int[4];
-                for (int x = 0; x < 4; x++)
-                    line[x] = map[x, y];
-
-                bool lineMoved = false;
-                //int[] merged = MergLine(line, true, out lineMoved);
-
-                if (lineMoved)
-                    moved = true;
-
-                /*for (int x = 0; x < 4; x++)
-                    map[x, y] = merged[x];*/
-            }
-
-            return moved;
+            case Direction.left:
+                moved = LeftMove();
+                Debug.Log("왼쪽");
+                break;
+            case Direction.right:
+                moved = RightMove();
+                Debug.Log("오른쪽");
+                break;
+            case Direction.up:
+                moved = UpMove();
+                Debug.Log("위쪽");
+                break;
+            case Direction.down:
+                moved = DownMove();
+                Debug.Log("아래쪽");
+                break;
         }
-        
         
         return moved;
     }
-
-    /*int[] MergLine(int[] line, bool collapse, out bool moved)
-    {
-        int[] a = new int[line.Length];
-        
-        return a;
-    }*/
     
     private void SpawnRandomTile()
     {
@@ -186,8 +164,166 @@ public class Game2048Manager : MonoBehaviour
         var pos = empty[Random.Range(0, empty.Count)];
         
         float v = Random.Range(0f, 1f);
-        map[pos.x, pos.y] = (v < 0.62f) ? 2 : 4;
+        map[pos.x, pos.y] = (v < 0.55f) ? 2 : 4;
 
         RefreshTiles();
     }
+    
+    
+    #region 타일 이동
+    private bool RightMove()
+    {
+        bool moved = false;
+        
+        for (int r = 0; r < 4; r++)
+        {
+            List<int> lines = new List<int>();
+            for (int c = 3; c >= 0; c--)
+            {
+                if(map[r,c] != 0)
+                    lines.Add(map[r,c]);
+            }
+                
+            List<int> merge = MergeLine(lines);
+
+            int mergeIdx = 0;
+            for (int c = 3; c >= 0; c--)
+            {
+                int newValue = (mergeIdx < merge.Count) ? merge[mergeIdx] : 0;
+                    
+                if (map[r, c] != newValue)
+                {
+                    moved = true;
+                    map[r, c] = newValue;
+                    Debug.Log(map[r, c]+" " + r + " " +c);
+                }
+
+                mergeIdx++;
+            }
+        }
+        
+        return moved;
+    }
+    
+    private bool LeftMove()
+    {
+        bool moved = false;
+        
+        for (int r = 0; r < 4; r++)
+        {
+            List<int> lines = new List<int>();
+            for (int c = 0; c < 4; c++)
+            {
+                if(map[r,c] != 0)
+                    lines.Add(map[r,c]);
+            }
+                
+            List<int> merge = MergeLine(lines);
+
+            int mergeIdx = 0;
+            for (int c = 0; c < 4; c++)
+            {
+                int newValue = (mergeIdx < merge.Count) ? merge[mergeIdx] : 0;
+                    
+                if (map[r, c] != newValue)
+                {
+                    moved = true;
+                    map[r, c] = newValue;
+                }
+
+                mergeIdx++;
+            }
+        }
+        
+        return moved;
+    }
+    
+    private bool UpMove()
+    {
+        bool moved = false;
+        
+        for (int c = 0; c < 4; c++)
+        {
+            List<int> lines = new List<int>();
+            for (int r = 0; r < 4; r++)
+            {
+                if(map[r,c] != 0)
+                    lines.Add(map[r,c]);
+            }
+                
+            List<int> merge = MergeLine(lines);
+            
+            int mergeIdx = 0;
+            for (int r = 0; r < 4; r++)
+            {
+                int newValue = (mergeIdx < merge.Count) ? merge[mergeIdx] : 0;
+                    
+                if (map[r, c] != newValue)
+                {
+                    moved = true;
+                    map[r, c] = newValue;
+                }
+
+                mergeIdx++;
+            }
+        }
+        
+        return moved;
+    }
+    
+    private bool DownMove()
+    {
+        bool moved = false;
+        
+        for (int c = 0; c < 4; c++)
+        {
+            List<int> lines = new List<int>();
+            for (int r = 3; r >= 0; r--)
+            {
+                if(map[r,c] != 0)
+                    lines.Add(map[r,c]);
+            }
+                
+            List<int> merge = MergeLine(lines);
+            
+            int mergeIdx = 0;
+            for (int r = 3; r >= 0; r--)
+            {
+                int newValue = (mergeIdx < merge.Count) ? merge[mergeIdx] : 0;
+                    
+                if (map[r, c] != newValue)
+                {
+                    moved = true;
+                    map[r, c] = newValue;
+                }
+
+                mergeIdx++;
+            }
+        }
+        
+        return moved;
+    }
+    
+    private List<int> MergeLine(List<int> line)
+    {
+        List<int> merged = new List<int>();
+        int idx = 0;
+
+        while (idx < line.Count)
+        {
+            if (idx + 1 < line.Count && line[idx] == line[idx + 1])
+            {
+                merged.Add(line[idx] * 2);
+                idx += 2;
+            }
+            else
+            {
+                merged.Add(line[idx]);
+                idx += 1;
+            }
+        }
+
+        return merged;
+    }
+    #endregion
 }
