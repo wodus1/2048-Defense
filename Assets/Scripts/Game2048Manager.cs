@@ -144,14 +144,14 @@ public class Game2048Manager : MonoBehaviour
     
     private void SpawnRandomTile()
     {
-        List<(int x, int y)> empty = new List<(int x, int y)>();
+        List<(int r, int c)> empty = new List<(int r, int c)>();
 
-        for (int x = 0; x < 4; x++)
+        for (int r = 0; r < 4; r++)
         {
-            for (int y = 0; y < 4; y++)
+            for (int c = 0; c < 4; c++)
             {
-                if (map[x, y] == 0)
-                    empty.Add((x, y));
+                if (map[r, c] == 0)
+                    empty.Add((r, c));
             }
         }
 
@@ -164,7 +164,7 @@ public class Game2048Manager : MonoBehaviour
         var pos = empty[Random.Range(0, empty.Count)];
         
         float v = Random.Range(0f, 1f);
-        map[pos.x, pos.y] = (v < 0.55f) ? 2 : 4;
+        map[pos.r, pos.c] = (v < 0.55f) ? 2 : 4;
 
         RefreshTiles();
     }
