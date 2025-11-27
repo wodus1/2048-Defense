@@ -1,4 +1,5 @@
 public interface ISubSystem
 {
-    void Initialize(Game2048Manager manager);
+    void Initialize(GameManager gameManager);
+    void Deinitialize();
 }

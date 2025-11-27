@@ -5,10 +5,11 @@ using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
 enum Direction { left, right, up, down }
-enum InputState { Idle, Dragging}
+enum InputState { Idle, Dragging }
 
-public class Game2048Manager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
+    [SerializeField] private SubSystemsManager subSystemsManager;
     [SerializeField] private List<TileUI> tiles = new List<TileUI>();
     private int[,] map = new int[4,4];
     private InputState inputState = InputState.Idle;
@@ -16,12 +17,11 @@ public class Game2048Manager : MonoBehaviour
     private float dragThreshold = 50f;
 
     public List<TileUI> Tiles => tiles;
-    
+    public SubSystemsManager SubSystemsManager => subSystemsManager;
+
     void Awake()
     {
-        InitTiles();
-        SpawnRandomTile();
-        SpawnRandomTile();
+        InitGameSetting();
     }
     
     void Update()
@@ -38,6 +38,13 @@ public class Game2048Manager : MonoBehaviour
         }
     }
 
+    private void InitGameSetting()
+    {
+        InitTiles();
+        subSystemsManager.Initialize(this);
+    }
+
+
     private void InitTiles()
     {
         for (int r = 0; r < 4; r++)
@@ -49,6 +56,9 @@ public class Game2048Manager : MonoBehaviour
         }
 
         RefreshTiles();
+
+        SpawnRandomTile();
+        SpawnRandomTile();
     }
     
     private void RefreshTiles()

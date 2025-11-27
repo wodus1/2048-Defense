@@ -517,6 +517,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318945875}
   m_CullTransparentMesh: 1
+--- !u!1 &326914250
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 326914251}
+  - component: {fileID: 326914252}
+  m_Layer: 0
+  m_Name: ProjectileSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &326914251
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326914250}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1801705266}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &326914252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326914250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84529fa082acebf439d54c07f6f2990a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileSystem
+  projectilePrefab: {fileID: 6737006786213137972, guid: 9c066aba5d7a71d45a8802a626678199, type: 3}
+  projectileRoot: {fileID: 187200842}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2019,52 +2065,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &932231304
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 932231305}
-  - component: {fileID: 932231306}
-  m_Layer: 0
-  m_Name: ProjectileSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &932231305
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 932231304}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1801705266}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &932231306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 932231304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84529fa082acebf439d54c07f6f2990a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectileSystem
-  projectilePrefab: {fileID: 6737006786213137972, guid: 9c066aba5d7a71d45a8802a626678199, type: 3}
-  projectileRoot: {fileID: 187200842}
 --- !u!1 &976983402
 GameObject:
   m_ObjectHideFlags: 0
@@ -3201,6 +3201,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1632758920}
   m_CullTransparentMesh: 1
+--- !u!1 &1644615021
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1644615022}
+  - component: {fileID: 1644615023}
+  m_Layer: 0
+  m_Name: PoolingSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1644615022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644615021}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1801705266}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1644615023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644615021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a01ce12637a0ccd468b5e4d7ba5c0ab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoolingSystem
 --- !u!1 &1651170200
 GameObject:
   m_ObjectHideFlags: 0
@@ -3518,7 +3562,7 @@ GameObject:
   - component: {fileID: 1717363563}
   - component: {fileID: 1717363564}
   m_Layer: 0
-  m_Name: 2048Manager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3551,6 +3595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0581ed2e0b16771429b04326b09e4ef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game2048Manager
+  subSystemsManager: {fileID: 1801705267}
   tiles:
   - {fileID: 468893991}
   - {fileID: 1690194236}
@@ -3928,7 +3973,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 932231305}
+  - {fileID: 326914251}
+  - {fileID: 1644615022}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1801705267
@@ -3943,7 +3989,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99616f7f2b18b764d8132ee7106a819d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubSystemsManager
-  game2048Manager: {fileID: 1717363564}
 --- !u!1 &1973851871
 GameObject:
   m_ObjectHideFlags: 0

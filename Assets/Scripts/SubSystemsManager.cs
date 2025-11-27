@@ -1,31 +1,37 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class SubSystemsManager : MonoBehaviour
 {
-    [SerializeField] private Game2048Manager game2048Manager;
-    private List<ISubSystem> subSystems = new List<ISubSystem>();
+    private GameManager gameManager;
+    private Dictionary<Type, ISubSystem> subSystems = new Dictionary<Type, ISubSystem>();
 
-    void Awake()
+    public void Initialize(GameManager gameManager)
     {
-        var components = GetComponentsInChildren<MonoBehaviour>(true);
-        
-        foreach (var comp in components)
+        this.gameManager = gameManager;
+
+        var subSystems = GetComponentsInChildren<ISubSystem>(true);
+
+        foreach (var subSystem in subSystems)
         {
-            if (comp is ISubSystem system)
-            {
-                subSystems.Add(system);
-                system.Initialize(game2048Manager);
-            }
+            this.subSystems.Add(subSystem.GetType(), subSystem);
         }
+
+        InitSubSystems();
     }
 
-    public T GetSystem<T>() where T : class, ISubSystem
+    private void InitSubSystems()
     {
-        foreach (var system in subSystems)
-            if (system is T typed)
-                return typed;
-
-        return null;
+        foreach(var subsystem in subSystems.Values)
+        {
+            subsystem.Initialize(gameManager);
+        }
+    }
+   
+    public T GetSubSystem<T>() where T : ISubSystem
+    {
+        subSystems.TryGetValue(typeof(T), out var subSystem);
+        return (T)subSystem;
     }
 }

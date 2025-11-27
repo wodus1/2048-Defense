@@ -4,39 +4,37 @@ using System.Collections.Generic;
 
 public class ProjectileSystem : MonoBehaviour, ISubSystem
 {
-    private Game2048Manager game2048Manager;
+    private GameManager gameManager;
+    private PoolingSystem poolingSystem;
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private Transform projectileRoot;
     
     private WaitForSeconds waitForSeconds;
-    private Stack<Projectile> pool = new Stack<Projectile>();
     private int poolSize = 30;
     
-    public void Initialize(Game2048Manager game2048Manager)
+    public void Initialize(GameManager gameManager)
     {
-        this.game2048Manager = game2048Manager;
+        this.gameManager = gameManager;
+        poolingSystem = this.gameManager.SubSystemsManager.GetSubSystem<PoolingSystem>();
         waitForSeconds = new WaitForSeconds(1.0f);
-        
-        for (int i = 0; i < poolSize; i++)
-        {
-            var projectile = Instantiate(projectilePrefab, projectileRoot);
-            projectile.gameObject.SetActive(false);
-            projectile.Initialize(this);
-            pool.Push(projectile);
-        }
-
+        poolingSystem.CreatePool<Projectile>(projectilePrefab, projectileRoot,poolSize);
         StartCoroutine(ShotLogic());
+    }
+
+    public void Deinitialize()
+    { 
     }
 
     private IEnumerator ShotLogic()
     {
         while (true)
         {
-            foreach (TileUI tile in game2048Manager.Tiles)
+            foreach (TileUI tile in gameManager.Tiles)
             {
                 if (tile.Value > 0)
                 {
-                    var projectile = GetProjectile();
+                    var projectile = poolingSystem.GetPool<Projectile>();
+                    projectile.Initialize(this);
                     projectile.Shoot(tile.transform.position, new Vector2(tile.transform.position.x, tile.transform.position.y+900));
                 }
             }
@@ -45,27 +43,9 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem
         }
     }
 
-    private Projectile GetProjectile()
-    {
-        Projectile projectile;
-
-        if (pool.Count > 0)
-        {
-            projectile = pool.Pop();
-        }
-        else
-        {
-            projectile = Instantiate(projectilePrefab, projectileRoot);
-            projectile.gameObject.SetActive(false);
-            projectile.Initialize(this);
-        }
-        
-        return projectile;
-    }
-
     public void ReturnToPool(Projectile projectile)
     {
         projectile.gameObject.SetActive(false);
-        pool.Push(projectile);
+        poolingSystem.ReturnPool(projectile);
     }
 }
