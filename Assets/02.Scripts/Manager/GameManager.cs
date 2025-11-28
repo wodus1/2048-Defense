@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 enum Direction { left, right, up, down }
 enum InputState { Idle, Dragging }
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
 {
     [SerializeField] private SubSystemsManager subSystemsManager;
     [SerializeField] private List<TileUI> tiles = new List<TileUI>();

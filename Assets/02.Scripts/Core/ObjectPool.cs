@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
 
-public interface IObjectPool
+public interface IObjectPool //오브젝트 풀링 인터페이스
 {
     void ClearPool();
 }
 
-public class ObjectPool<T> : IObjectPool where T : Component
+public class ObjectPool<T> : IObjectPool where T : Component //공용 오브젝트 풀
 {
     private Stack<T> stack = new Stack<T>();
     private T prefab;

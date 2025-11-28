@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TileUI : MonoBehaviour // 타일 ui view
+public class TileUI : MonoBehaviour //2048타일 ui view
 {
     [SerializeField] private Image bgImage;
     [SerializeField] private TextMeshProUGUI valueText;

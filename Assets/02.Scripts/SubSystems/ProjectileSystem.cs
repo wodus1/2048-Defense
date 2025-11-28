@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ProjectileSystem : MonoBehaviour, ISubSystem
+public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
 {
     private GameManager gameManager;
     private PoolingSystem poolingSystem;
@@ -17,7 +17,7 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem
         this.gameManager = gameManager;
         poolingSystem = this.gameManager.SubSystemsManager.GetSubSystem<PoolingSystem>();
         waitForSeconds = new WaitForSeconds(1.0f);
-        poolingSystem.CreatePool<Projectile>(projectilePrefab, projectileRoot,poolSize);
+        poolingSystem.CreatePool<Projectile>(projectilePrefab, projectileRoot, poolSize);
         StartCoroutine(ShotLogic());
     }
 

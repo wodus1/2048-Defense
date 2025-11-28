@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour //투사체 오브젝트
 {
     private ProjectileSystem owner;
     private Vector3 startPos;

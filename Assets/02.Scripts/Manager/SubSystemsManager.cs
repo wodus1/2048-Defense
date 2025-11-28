@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class SubSystemsManager : MonoBehaviour
+public class SubSystemsManager : MonoBehaviour //서브 시스템 매니저
 {
     private GameManager gameManager;
     private Dictionary<Type, ISubSystem> subSystems = new Dictionary<Type, ISubSystem>();

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour //몬스터 오브젝트
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

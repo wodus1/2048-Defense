@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolingSystem : MonoBehaviour, ISubSystem
+public class PoolingSystem : MonoBehaviour, ISubSystem //풀링 시스템
 {
     private GameManager gameManger;
     private Dictionary<Type, IObjectPool> pools = new Dictionary<Type, IObjectPool>();
