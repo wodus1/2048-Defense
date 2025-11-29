@@ -9,13 +9,13 @@ public class Projectile : MonoBehaviour //투사체 오브젝트
     private float duration = 0.5f;
     private float elapsed;
     private bool isMove = false;
-    
+
     public void Initialize(ProjectileSystem owner)
     {
         this.owner = owner;
     }
 
-    public void Shoot(Vector2 start, Vector3 target)
+    public void Shoot(Vector2 start, Vector2 target)
     {
         startPos = start;
         targetPos = target;
