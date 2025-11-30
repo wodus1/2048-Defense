@@ -133,19 +133,15 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
         {
             case Direction.left:
                 moved = LeftMove();
-                Debug.Log("왼쪽");
                 break;
             case Direction.right:
                 moved = RightMove();
-                Debug.Log("오른쪽");
                 break;
             case Direction.up:
                 moved = UpMove();
-                Debug.Log("위쪽");
                 break;
             case Direction.down:
                 moved = DownMove();
-                Debug.Log("아래쪽");
                 break;
         }
         

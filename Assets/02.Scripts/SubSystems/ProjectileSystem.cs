@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using static Monster;
 
 public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
 {
@@ -13,6 +14,8 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
     private WaitForSeconds waitForSeconds;
     private int poolSize = 30;
     private Coroutine currentCoroutine;
+    private float damage = 5;
+    private float speed = 900f;
 
     public void Initialize(GameManager gameManager)
     {
@@ -44,7 +47,7 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
 
             var projectile = poolingSystem.GetPool<Projectile>();
             projectile.Initialize(this);
-            projectile.Shoot(projectileRoot.position, targetPos);
+            projectile.Shoot(projectileRoot.position, targetPos, damage, speed);
         }
     }
 
@@ -64,6 +67,9 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
         foreach (var monster in monsterSystem.Monsters)
         {
             if (!monster.IsVisible())
+                break;
+
+            if (monster.CurrentState == MonsterState.Die)
                 continue;
 
             float verticalDiff = Mathf.Abs(monster.transform.position.y - myPos.y);

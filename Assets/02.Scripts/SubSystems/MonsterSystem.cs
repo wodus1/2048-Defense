@@ -11,7 +11,7 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
     private List<Monster> monsters = new List<Monster>();
     private List<Vector2> spawnPositons = new List<Vector2>()
     { new Vector2(-400, 1040), new Vector2(-200, 1040), new Vector2(0, 1040), new Vector2(200, 1040), new Vector2(400, 1040) };
-    private int poolSize = 10;
+    private int poolSize = 20;
     private WaitForSeconds waitForSeconds;
     private Coroutine currentCoroutine;
 
@@ -51,10 +51,11 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
             if (monsterPrefabs[monsterIdx] is BlueMonster)
             {
                 monster = poolingSystem.GetPool<BlueMonster>();
+                monster.Initialize(this);
                 monsters.Add(monster);
             }
 
-            monster.rect.anchoredPosition = spawnPositons[spawnIdx];
+            monster.Rect.anchoredPosition = spawnPositons[spawnIdx];
 
             yield return waitForSeconds;
         }

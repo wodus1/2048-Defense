@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Monster : MonoBehaviour //몬스터 추상 클래스
 {
-    protected enum MonsterState
+    public enum MonsterState
     {
         Move,
         Die
@@ -13,16 +13,20 @@ public abstract class Monster : MonoBehaviour //몬스터 추상 클래스
     protected abstract float NormalHp { get; }
     protected abstract float NormalSpeed { get; }
 
-    public RectTransform rect;
+    public RectTransform Rect;
     protected RectTransform canvasRect;
     protected float currentHp;
+    protected MonsterSystem monsterSystem;
+    public MonsterState CurrentState;
 
     protected void Awake()
     {
-        rect = GetComponent<RectTransform>();
+        Rect = GetComponent<RectTransform>();
         canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
         currentHp = NormalHp;
     }
+
+    public abstract void Initialize(MonsterSystem monsterSystem);
 
     public virtual void TakeDamage(float damage)
     {
@@ -36,8 +40,6 @@ public abstract class Monster : MonoBehaviour //몬스터 추상 클래스
         }
     }
 
-    public Vector2 Position => new Vector2(transform.position.x, transform.position.z);
-
     public void MoveTo(Vector2 dir)
     {
         transform.position += (Vector3)(dir * NormalSpeed * Time.deltaTime);
@@ -45,7 +47,7 @@ public abstract class Monster : MonoBehaviour //몬스터 추상 클래스
 
     public bool IsVisible()
     {
-        Vector2 localPos = canvasRect.InverseTransformPoint(rect.position);
+        Vector2 localPos = canvasRect.InverseTransformPoint(Rect.position);
 
         float halfH = canvasRect.rect.height * 0.5f;
 

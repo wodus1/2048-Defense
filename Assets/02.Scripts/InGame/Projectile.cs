@@ -5,38 +5,42 @@ public class Projectile : MonoBehaviour //투사체 오브젝트
 {
     private ProjectileSystem owner;
     private Vector3 startPos;
-    private Vector3 targetPos;
-    private float duration = 0.5f;
-    private float elapsed;
-    private bool isMove = false;
+    private Vector3 direction;
+    private float speed;
+    private float damage;
+    
+    public float Damage => damage;
 
     public void Initialize(ProjectileSystem owner)
     {
         this.owner = owner;
     }
 
-    public void Shoot(Vector2 start, Vector2 target)
+    public void Shoot(Vector2 start, Vector2 target, float damage, float speed)
     {
-        startPos = start;
-        targetPos = target;
         transform.position = start;
+        startPos = start;
+        direction = (target - start).normalized;
+        this.damage = damage;
+        this.speed = speed;
         gameObject.SetActive(true);
-        isMove = true;
     }
 
     private void Update()
     {
-        if(!isMove)
-            return;
-        
-        elapsed += Time.deltaTime;
-        float t = Mathf.Clamp01(elapsed / duration);
-        transform.position = Vector3.Lerp(startPos, targetPos, t);
+        transform.position += direction * speed * Time.deltaTime;
 
-        if (t >= 1f)
+        float sqr = (transform.position - startPos).sqrMagnitude;
+        if(Vector3.Distance(startPos, transform.position) > 1500)
         {
-            isMove = false;
-            elapsed = 0f;
+            owner.ReturnToPool(this);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Monster"))
+        {
             owner.ReturnToPool(this);
         }
     }

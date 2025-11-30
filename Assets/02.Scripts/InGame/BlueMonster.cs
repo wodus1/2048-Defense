@@ -5,22 +5,21 @@ public class BlueMonster : Monster //몬스터 오브젝트
     protected override float NormalHp => 50f;
     protected override float NormalSpeed => 12f;
 
-    private MonsterSystem monsterSystem;
-    private MonsterState monsterState;
-
     private void Start()
     {
-        monsterState = MonsterState.Move;
+        CurrentState = MonsterState.Move;
     }
 
-    public void Initialize(MonsterSystem monsterSystem)
+    public override void Initialize(MonsterSystem monsterSystem)
     {
         this.monsterSystem = monsterSystem;
+        currentHp = NormalHp;
+        CurrentState = MonsterState.Move;
     }
 
     private void Update()
     {
-        switch (monsterState)
+        switch (CurrentState)
         {
             case MonsterState.Move:
                 monsterAnimator.PlayMove();
@@ -29,7 +28,6 @@ public class BlueMonster : Monster //몬스터 오브젝트
                 break;
             case MonsterState.Die:
                 monsterAnimator.PlayDie();
-                monsterSystem.ReturnToPool(this);
 
                 break;
         }
@@ -37,6 +35,19 @@ public class BlueMonster : Monster //몬스터 오브젝트
 
     public override void OnDie()
     {
-        monsterState = MonsterState.Die;
+        CurrentState = MonsterState.Die;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Projectile>() is Projectile projectile)
+        {
+            TakeDamage(projectile.Damage);
+        }
+    }
+
+    public void RetrunToPool()
+    {
+        monsterSystem.ReturnToPool(this);
     }
 }
