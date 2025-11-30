@@ -10,10 +10,10 @@ public class BlueMonster : Monster //몬스터 오브젝트
         CurrentState = MonsterState.Move;
     }
 
-    public override void Initialize(MonsterSystem monsterSystem)
+    public override void Initialize(MonsterSystem monsterSystem, float hpMul)
     {
         this.monsterSystem = monsterSystem;
-        currentHp = NormalHp;
+        currentHp = NormalHp * hpMul;
         CurrentState = MonsterState.Move;
     }
 

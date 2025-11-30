@@ -12,6 +12,16 @@ public class PoolingSystem : MonoBehaviour, ISubSystem //풀링 시스템
         this.gameManger = gameManager;
     }
 
+    public void Deinitialize()
+    {
+        foreach (var poolType in pools.Values)
+        {
+            poolType.ClearPool();
+        }
+
+        pools.Clear();
+    }
+
     public void CreatePool<T>(T prefab, Transform root, int size) where T : Component
     {
         var type = typeof(T);
@@ -45,15 +55,5 @@ public class PoolingSystem : MonoBehaviour, ISubSystem //풀링 시스템
         {
             Destroy(obj.gameObject);
         }
-    }
-
-    public void Deinitialize()
-    {
-        foreach (var poolType in pools.Values)
-        {
-            poolType.ClearPool();
-        }
-
-        pools.Clear();
     }
 }

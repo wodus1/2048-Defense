@@ -26,7 +26,7 @@ public abstract class Monster : MonoBehaviour //몬스터 추상 클래스
         currentHp = NormalHp;
     }
 
-    public abstract void Initialize(MonsterSystem monsterSystem);
+    public abstract void Initialize(MonsterSystem monsterSystem, float hpMul);
 
     public virtual void TakeDamage(float damage)
     {

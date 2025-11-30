@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
     private InputState inputState = InputState.Idle;
     private Vector2 startTouchPos;
     private float dragThreshold = 50f;
+    private LevelSystem levelSystem;
 
     public List<TileUI> Tiles => tiles;
     public SubSystemsManager SubSystemsManager => subSystemsManager;
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
     {
         InitTiles();
         subSystemsManager.Initialize(this);
+        levelSystem = subSystemsManager.GetSubSystem<LevelSystem>();
     }
 
 
@@ -318,6 +320,9 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
         {
             if (idx + 1 < line.Count && line[idx] == line[idx + 1])
             {
+                int value = line[idx] * 2;
+                levelSystem.AddExp(value);
+
                 merged.Add(line[idx] * 2);
                 idx += 2;
             }
