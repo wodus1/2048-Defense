@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class BlueMonster : Monster //몬스터 오브젝트
+public class BugMonster : Monster //공중 몬스터 오브젝트
 {
-    protected override float NormalHp => 50f;
-    protected override float NormalSpeed => 12f;
+    protected override float NormalHp => 30f;
+    protected override float NormalSpeed => 19f;
 
     private void Start()
     {

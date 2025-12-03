@@ -34,6 +34,14 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //ï¿½ï¿½ï¿½ï¿½ ï¿½Ã½ï¿½ï¿
             {
                 poolingSystem.CreatePool(blueMonster, monsterRoot, poolSize);
             }
+            else if(monster is BugMonster bugMoster)
+            {
+                poolingSystem.CreatePool(bugMoster, monsterRoot, poolSize);
+            }
+            else if (monster is RedMonster redMoster)
+            {
+                poolingSystem.CreatePool(redMoster, monsterRoot, poolSize);
+            }
         }
 
         currentCoroutine = StartCoroutine(WaveLoop());
@@ -83,6 +91,18 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //ï¿½ï¿½ï¿½ï¿½ ï¿½Ã½ï¿½ï¿
                 monster.Initialize(this, hpMul);
                 monsters.Add(monster);
             }
+            else if (monsterPrefabs[monsterIdx] is BugMonster)
+            {
+                monster = poolingSystem.GetPool<BugMonster>();
+                monster.Initialize(this, hpMul);
+                monsters.Add(monster);
+            }
+            else if (monsterPrefabs[monsterIdx] is RedMonster)
+            {
+                monster = poolingSystem.GetPool<RedMonster>();
+                monster.Initialize(this, hpMul);
+                monsters.Add(monster);
+            }
 
             monster.Rect.anchoredPosition = spawnPositons[spawnIdx];
 
@@ -96,6 +116,14 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //ï¿½ï¿½ï¿½ï¿½ ï¿½Ã½ï¿½ï¿
         if (monster is BlueMonster blueMonster)
         {
             poolingSystem.ReturnPool(blueMonster);
+        }
+        else if (monster is BlueMonster BugMonster)
+        {
+            poolingSystem.ReturnPool(BugMonster);
+        }
+        else if (monster is BlueMonster RedMonster)
+        {
+            poolingSystem.ReturnPool(RedMonster);
         }
 
         monsters.Remove(monster);
