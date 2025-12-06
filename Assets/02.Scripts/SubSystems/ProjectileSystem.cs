@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using static Monster;
 
-public class ProjectileSystem : MonoBehaviour, ISubSystem //≈ıªÁ√º Ω√Ω∫≈€
+public class ProjectileSystem : MonoBehaviour, ISubSystem //Ìà¨ÏÇ¨Ï≤¥ ÏãúÏä§ÌÖú
 {
     private GameManager gameManager;
     private PoolingSystem poolingSystem;
     private MonsterSystem monsterSystem;
+    private UpgradeSystem upgradeSystem;
+
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private Transform projectileRoot;
     
@@ -15,14 +15,19 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //≈ıªÁ√º Ω√Ω∫≈€
     private int poolSize = 30;
     private Coroutine currentCoroutine;
     private float damage = 5;
-    private float speed = 900f;
+    private float projectileSpeed = 900f;
+    private float attackSpeed = 1f;
+    private float currentAttackSpeed;
 
     public void Initialize(GameManager gameManager)
     {
         this.gameManager = gameManager;
         poolingSystem = this.gameManager.SubSystemsManager.GetSubSystem<PoolingSystem>();
         monsterSystem = this.gameManager.SubSystemsManager.GetSubSystem<MonsterSystem>();
-        waitForSeconds = new WaitForSeconds(1.0f);
+        upgradeSystem = this.gameManager.SubSystemsManager.GetSubSystem<UpgradeSystem>();
+
+        currentAttackSpeed = attackSpeed * upgradeSystem.AttackSpeedMultiplier;
+        waitForSeconds = new WaitForSeconds(currentAttackSpeed);
         poolingSystem.CreatePool(projectilePrefab, projectileRoot, poolSize);
         currentCoroutine = StartCoroutine(ShotLogic());
     }
@@ -37,9 +42,18 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //≈ıªÁ√º Ω√Ω∫≈€
     {
         while (true)
         {
+            float attackSpeed = this.attackSpeed * upgradeSystem.AttackSpeedMultiplier;
+            float newAttackSpeed = Mathf.Clamp(attackSpeed, 0.1f, float.MaxValue);
+
+            if (!Mathf.Approximately(currentAttackSpeed, newAttackSpeed))
+            {
+                currentAttackSpeed = newAttackSpeed;
+                waitForSeconds = new WaitForSeconds(currentAttackSpeed);
+            }
+
             yield return waitForSeconds;
 
-            if (monsterSystem.Monsters.Count < 1 || monsterSystem.Monsters == null)
+            if (monsterSystem.Monsters == null || monsterSystem.Monsters.Count < 1)
                 continue;
 
             if (!TryGetNearMonsterPos(out Vector3 targetPos))
@@ -47,7 +61,11 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //≈ıªÁ√º Ω√Ω∫≈€
 
             var projectile = poolingSystem.GetPool<Projectile>();
             projectile.Initialize(this);
-            projectile.Shoot(projectileRoot.position, targetPos, damage, speed);
+
+            float finalDamage = damage * upgradeSystem.DamageMultiplier;
+            float finalSpeed = projectileSpeed * upgradeSystem.ProjectileSpeedMultiplier;
+
+            projectile.Shoot(projectileRoot.position, targetPos, finalDamage, finalSpeed);
         }
     }
 
@@ -69,7 +87,7 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //≈ıªÁ√º Ω√Ω∫≈€
             if (!monster.IsVisible())
                 break;
 
-            if (monster.CurrentState == MonsterState.Die)
+            if (monster.CurrentState == Monster.MonsterState.Die)
                 continue;
 
             float verticalDiff = Mathf.Abs(monster.transform.position.y - myPos.y);

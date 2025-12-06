@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterSystem : MonoBehaviour, ISubSystem //���� �ý���
+public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
 {
     private GameManager gameManager;
     private PoolingSystem poolingSystem;

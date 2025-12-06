@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3158bf12938f4c849a90083643b3fc6e, type: 3}
   m_Name: DamageUpEffect
   m_EditorClassIdentifier: Assembly-CSharp::DamageUpEffect
-  value: 0.2
+  title: "\uACF5\uACA9\uB825 \uC99D\uAC00"
+  description: "\uACF5\uACA9\uB825 20% \uC99D\uAC00"
+  value: 20

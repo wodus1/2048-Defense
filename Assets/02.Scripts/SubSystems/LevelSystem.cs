@@ -1,17 +1,23 @@
+using System;
 using UnityEngine;
 
-public class LevelSystem : MonoBehaviour, ISubSystem
+public class LevelSystem : MonoBehaviour, ISubSystem //레벨업 시스템
 {
+    private GameManager gameManager;
     private int level = 1;
     private int exp = 0;
-    private GameManager gameManager;
+
+    public event Action OnUpgrade;
 
     public void Initialize(GameManager gameManager)
     {
         this.gameManager = gameManager;
     }
 
-    public void Deinitialize() { }
+    public void Deinitialize()
+    {
+        OnUpgrade = null;
+    }
 
     public void AddExp(int amount)
     {
@@ -20,6 +26,7 @@ public class LevelSystem : MonoBehaviour, ISubSystem
         if (exp > 100)
         {
             exp -= 100;
+            OnUpgrade?.Invoke();
         }
     }
 

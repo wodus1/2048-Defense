@@ -1,10 +1,10 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Effect/ProjectileSpeedUp")]
-public class ProjectileSpeedUpEffect : Effect //공격력 증가 효과
+public class ProjectileSpeedUpEffect : Effect //투사체 속도 증가 효과
 {
-    public override void Apply(UpgradeSystem upgrade)
+    public override void Apply(UpgradeSystem upgradeSystem)
     {
-        upgrade.AddProjectileSpeedMultiplier(value);
+        upgradeSystem.AddProjectileSpeedMultiplier(value);
     }
 }
