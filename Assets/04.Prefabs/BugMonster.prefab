@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6958979206882969603}
   - component: {fileID: 5887073420469007029}
   - component: {fileID: 6397321218578897285}
+  - component: {fileID: 675574396469473819}
   m_Layer: 5
   m_Name: BugMonster
   m_TagString: Monster
@@ -166,3 +167,30 @@ CapsuleCollider2D:
   m_Offset: {x: 3.5, y: 9}
   m_Size: {x: 130, y: 180}
   m_Direction: 0
+--- !u!50 &675574396469473819
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3161090482699748013}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

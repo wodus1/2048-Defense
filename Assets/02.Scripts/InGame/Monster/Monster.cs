@@ -6,12 +6,14 @@ public abstract class Monster : MonoBehaviour //몬스터 추상 클래스
     public enum MonsterState
     {
         Move,
-        Die
+        Die,
+        Attack
     }
 
     [SerializeField] protected MonsterAnimator monsterAnimator;
     protected abstract float NormalHp { get; }
     protected abstract float NormalSpeed { get; }
+    protected abstract int NormalAttackDamage { get; }
 
     public RectTransform Rect;
     protected RectTransform canvasRect;
@@ -26,7 +28,7 @@ public abstract class Monster : MonoBehaviour //몬스터 추상 클래스
         currentHp = NormalHp;
     }
 
-    public abstract void Initialize(MonsterSystem monsterSystem, float hpMul);
+    public abstract void Initialize(MonsterSystem monsterSystem, HpSystem hpSystem, float hpMul);
 
     public virtual void TakeDamage(float damage)
     {

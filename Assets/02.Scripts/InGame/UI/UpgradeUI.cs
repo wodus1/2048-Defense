@@ -38,6 +38,8 @@ public class UpgradeUI : MonoBehaviour //강화 시스템 ui view
 
         effect2TitleText.text = effect2.title;
         effect2DescriptionText.text = effect2.description;
+
+        this.upgradeSystem.Pause();
     }
 
     private void OnClickEffect1()
@@ -46,6 +48,8 @@ public class UpgradeUI : MonoBehaviour //강화 시스템 ui view
 
         currentEffect1.Apply(upgradeSystem);
         upgradeUIPanel.SetActive(false);
+
+        upgradeSystem.Resume();
     }
 
     private void OnClickEffect2()
@@ -54,5 +58,7 @@ public class UpgradeUI : MonoBehaviour //강화 시스템 ui view
 
         currentEffect2.Apply(upgradeSystem);
         upgradeUIPanel.SetActive(false);
+
+        upgradeSystem.Resume();
     }
 }

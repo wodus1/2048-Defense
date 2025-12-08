@@ -28,6 +28,9 @@ public class Projectile : MonoBehaviour //투사체 오브젝트
 
     private void Update()
     {
+        if (owner.IsPause())
+            return;
+
         transform.position += direction * speed * Time.deltaTime;
 
         float sqr = (transform.position - startPos).sqrMagnitude;

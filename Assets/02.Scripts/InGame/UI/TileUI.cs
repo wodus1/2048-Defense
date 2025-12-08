@@ -7,26 +7,26 @@ public class TileUI : MonoBehaviour //2048타일 ui view
 {
     [SerializeField] private Image bgImage;
     [SerializeField] private TextMeshProUGUI valueText;
-    private Dictionary<int, Color> colors = new Dictionary<int, Color>()
+    private Dictionary<int, Color32> colors = new Dictionary<int, Color32>()
     {
-        { 0, new Color(0.90f, 0.90f, 0.90f) },
-        { 2, new Color(0.93f, 0.89f, 0.85f) },
-        { 4, new Color(0.93f, 0.88f, 0.78f) },
-        { 8, new Color(0.95f, 0.69f, 0.47f) },
-        { 16, new Color(0.96f, 0.58f, 0.39f) },
-        { 32, new Color(0.96f, 0.49f, 0.37f) },
-        { 64, new Color(0.96f, 0.37f, 0.23f) },
-        { 128, new Color(0.93f, 0.81f, 0.45f) },
-        { 256, new Color(0.93f, 0.80f, 0.38f) },
-        { 512, new Color(0.93f, 0.78f, 0.31f) },
-        { 1024, new Color(0.93f, 0.77f, 0.25f) },
-        { 2048, new Color(0.93f, 0.76f, 0.18f) },
-        { 4096, new Color(0.50f, 0.80f, 0.18f) },
-        { 8192, new Color(0.50f, 0.75f, 0.15f) },
-        { 16384, new Color(0.50f, 0.65f, 0.10f) },
+        { 0,     new Color32(255, 255, 255, 255) },
+        { 2,     new Color32(237, 227, 217, 255) },
+        { 4,     new Color32(237, 224, 199, 255) },
+        { 8,     new Color32(242, 176, 120, 255) },
+        { 16,    new Color32(245, 148, 99, 255) },
+        { 32,    new Color32(245, 125, 94, 255) },
+        { 64,    new Color32(245, 94, 58, 255) },
+        { 128,   new Color32(237, 207, 115, 255) },
+        { 256,   new Color32(237, 204, 97, 255) },
+        { 512,   new Color32(237, 199, 79, 255) },
+        { 1024,  new Color32(237, 196, 63, 255) },
+        { 2048,  new Color32(237, 194, 45, 255) },
+        { 4096,  new Color32(77, 169, 255, 255) },
+        { 8192,  new Color32(59, 107, 255, 255) },
+        { 16384, new Color32(110, 45, 255, 255) },
         
         //16384 보다 큰 모든 값
-        {-1, new Color(0.2f, 0.50f, 0.73f)}
+        { -1, new Color32(51, 128, 186, 255) }
     };
     private int value;
     public int Value => value;
@@ -45,7 +45,7 @@ public class TileUI : MonoBehaviour //2048타일 ui view
 
     void UpdateColor(int value)
     {
-        Color col;
+        Color32 col;
         if (!colors.TryGetValue(value, out col))
         {
             col = colors[-1];

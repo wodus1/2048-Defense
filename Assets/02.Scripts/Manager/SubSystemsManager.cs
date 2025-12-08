@@ -21,6 +21,18 @@ public class SubSystemsManager : MonoBehaviour //서브 시스템 매니저
         InitSubSystems();
     }
 
+    public void Deinitialize()
+    {
+        foreach (var subSystem in subSystems.Values)
+        {
+            subSystem.Deinitialize();
+        }
+
+        subSystems.Clear();
+
+        gameManager = null;
+    }
+
     private void InitSubSystems()
     {
         foreach(var subsystem in subSystems.Values)

@@ -20,6 +20,8 @@ public class PoolingSystem : MonoBehaviour, ISubSystem //풀링 시스템
         }
 
         pools.Clear();
+
+        gameManger = null;
     }
 
     public void CreatePool<T>(T prefab, Transform root, int size) where T : Component

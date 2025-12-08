@@ -7,6 +7,7 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
     private GameManager gameManager;
     private PoolingSystem poolingSystem;
     private LevelSystem levelSystem;
+    private HpSystem hpSystem;
 
     [SerializeField] private Monster[] monsterPrefabs;
     [SerializeField] private Transform monsterRoot;
@@ -16,7 +17,7 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
     { new Vector2(-400, 1040), new Vector2(-200, 1040), new Vector2(0, 1040), new Vector2(200, 1040), new Vector2(400, 1040) };
 
     private int poolSize = 20;
-    private WaitForSeconds interval = new WaitForSeconds(5.0f);
+    private WaitForSeconds interval;
     private WaitForSeconds breakTime = new WaitForSeconds(10.0f);
     private Coroutine currentCoroutine;
 
@@ -27,6 +28,7 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
         this.gameManager = gameManager;
         poolingSystem = this.gameManager.SubSystemsManager.GetSubSystem<PoolingSystem>();
         levelSystem = this.gameManager.SubSystemsManager.GetSubSystem<LevelSystem>();
+        hpSystem = this.gameManager.SubSystemsManager.GetSubSystem<HpSystem>();
 
         foreach (Monster monster in monsterPrefabs)
         {
@@ -34,7 +36,7 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
             {
                 poolingSystem.CreatePool(blueMonster, monsterRoot, poolSize);
             }
-            else if(monster is BugMonster bugMoster)
+            else if (monster is BugMonster bugMoster)
             {
                 poolingSystem.CreatePool(bugMoster, monsterRoot, poolSize);
             }
@@ -51,7 +53,13 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
     {
         StopCoroutine(currentCoroutine);
         currentCoroutine = null;
+        interval = null;
         monsters.Clear();
+
+        gameManager = null;
+        poolingSystem = null;
+        levelSystem = null;
+        hpSystem = null;
     }
 
     private IEnumerator WaveLoop()
@@ -59,8 +67,8 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
         while (true)
         {
             yield return SpawnMonster();
-            
-            foreach(Monster monster in monsters)
+
+            foreach (Monster monster in monsters)
             {
                 monster.CurrentState = Monster.MonsterState.Die;
             }
@@ -83,24 +91,24 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
         {
             int monsterIdx = Random.Range(0, monsterPrefabs.Length);
             int spawnIdx = Random.Range(0, spawnPositons.Count);
-            
+
             Monster monster = null;
             if (monsterPrefabs[monsterIdx] is BlueMonster)
             {
                 monster = poolingSystem.GetPool<BlueMonster>();
-                monster.Initialize(this, hpMul);
+                monster.Initialize(this, hpSystem, hpMul);
                 monsters.Add(monster);
             }
             else if (monsterPrefabs[monsterIdx] is BugMonster)
             {
                 monster = poolingSystem.GetPool<BugMonster>();
-                monster.Initialize(this, hpMul);
+                monster.Initialize(this, hpSystem, hpMul);
                 monsters.Add(monster);
             }
             else if (monsterPrefabs[monsterIdx] is RedMonster)
             {
                 monster = poolingSystem.GetPool<RedMonster>();
-                monster.Initialize(this, hpMul);
+                monster.Initialize(this, hpSystem, hpMul);
                 monsters.Add(monster);
             }
 
@@ -127,5 +135,10 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
         }
 
         monsters.Remove(monster);
+    }
+
+    public bool IsPause()
+    {
+        return gameManager.IsPause;
     }
 }

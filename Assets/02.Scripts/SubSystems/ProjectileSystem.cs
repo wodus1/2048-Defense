@@ -22,6 +22,11 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
     public void Initialize(GameManager gameManager)
     {
         this.gameManager = gameManager;
+        poolSize = 30;
+        damage = 5;
+        projectileSpeed = 900f;
+        attackSpeed = 1f;
+
         poolingSystem = this.gameManager.SubSystemsManager.GetSubSystem<PoolingSystem>();
         monsterSystem = this.gameManager.SubSystemsManager.GetSubSystem<MonsterSystem>();
         upgradeSystem = this.gameManager.SubSystemsManager.GetSubSystem<UpgradeSystem>();
@@ -36,6 +41,11 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
     {
         StopCoroutine(currentCoroutine);
         currentCoroutine = null;
+
+        gameManager = null;
+        poolingSystem = null;
+        monsterSystem = null;
+        upgradeSystem = null;
     }
 
     private IEnumerator ShotLogic()
@@ -101,5 +111,10 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
         }
 
         return found;
+    }
+
+    public bool IsPause()
+    {
+        return gameManager.IsPause;
     }
 }

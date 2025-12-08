@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
 
 enum Direction { left, right, up, down }
 enum InputState { Idle, Dragging }
@@ -17,6 +16,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
     private float dragThreshold = 50f;
     private LevelSystem levelSystem;
 
+    public bool IsPause;
     public List<TileUI> Tiles => tiles;
     public SubSystemsManager SubSystemsManager => subSystemsManager;
 
@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
     
     void Update()
     {
+        if (IsPause)
+            return;
+
         switch (inputState)
         {
             case InputState.Idle:
@@ -41,11 +44,29 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
 
     private void InitGameSetting()
     {
+        Resume();
         InitTiles();
         subSystemsManager.Initialize(this);
         levelSystem = subSystemsManager.GetSubSystem<LevelSystem>();
     }
 
+    public void OnGameOver()
+    {
+        subSystemsManager.Deinitialize();
+        Pause();
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1f;
+        IsPause = false;
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+        IsPause = true;
+    }
 
     private void InitTiles()
     {
@@ -169,9 +190,9 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
             return;
         }
         
-        var pos = empty[Random.Range(0, empty.Count)];
+        var pos = empty[UnityEngine.Random.Range(0, empty.Count)];
         
-        float v = Random.Range(0f, 1f);
+        float v = UnityEngine.Random.Range(0f, 1f);
         map[pos.r, pos.c] = (v < 0.55f) ? 2 : 4;
 
         RefreshTiles();

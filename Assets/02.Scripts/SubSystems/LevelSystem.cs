@@ -12,11 +12,14 @@ public class LevelSystem : MonoBehaviour, ISubSystem //레벨업 시스템
     public void Initialize(GameManager gameManager)
     {
         this.gameManager = gameManager;
+        level = 1;
+        exp = 0;
     }
 
     public void Deinitialize()
     {
         OnUpgrade = null;
+        gameManager = null;
     }
 
     public void AddExp(int amount)

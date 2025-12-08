@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
-using UnityEngine.InputSystem.Controls;
 
 public class UpgradeSystem : MonoBehaviour, ISubSystem //강화 시스템
 {
@@ -22,19 +20,26 @@ public class UpgradeSystem : MonoBehaviour, ISubSystem //강화 시스템
     public void Initialize(GameManager gameManager)
     {
         this.gameManger = gameManager;
-        levelSystem =this.gameManger.SubSystemsManager.GetSubSystem<LevelSystem>();
-        levelSystem.OnUpgrade += OnUpgrade;
+        damageMultiplier = 1f;
+        attackSpeedMultiplier = 1f;
+        projectileSpeedMultiplier = 1f;
+        attackSpeed = 1f;
+
+        levelSystem = this.gameManger.SubSystemsManager.GetSubSystem<LevelSystem>();
+        levelSystem.OnUpgrade += GetRandomEffects;
     }
 
     public void Deinitialize()
     {
         effects.Clear();
+        gameManger = null;
+        levelSystem = null;
     }
 
-    private void GetRandomEffects(out Effect effect1, out Effect effect2)
+    private void GetRandomEffects()
     {
         int firstIndex = Random.Range(0, effects.Count);
-        effect1 = effects[firstIndex];
+        Effect effect1 = effects[firstIndex];
 
         int secondIndex = firstIndex;
         while (secondIndex == firstIndex)
@@ -42,14 +47,9 @@ public class UpgradeSystem : MonoBehaviour, ISubSystem //강화 시스템
             secondIndex = Random.Range(0, effects.Count);
         }
 
-        effect2 = effects[secondIndex];
+        Effect effect2 = effects[secondIndex];
 
         upgradeUI.Initialize(this, effect1, effect2);
-    }
-
-    private void OnUpgrade()
-    {
-        GetRandomEffects(out Effect effect1, out Effect effect2);
     }
 
     public void AddDamageMultiplier(float delta)
@@ -66,5 +66,15 @@ public class UpgradeSystem : MonoBehaviour, ISubSystem //강화 시스템
     public void AddProjectileSpeedMultiplier(float delta)
     {
         projectileSpeedMultiplier += delta * 0.01f;
+    }
+
+    public void Resume()
+    {
+        gameManger.Resume();
+    }
+
+    public void Pause()
+    {
+        gameManger.Pause();
     }
 }
