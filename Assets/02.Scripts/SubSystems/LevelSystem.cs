@@ -47,6 +47,7 @@ public class LevelSystem : MonoBehaviour, ISubSystem //레벨업 시스템
     public void LevelUp()
     {
         level++;
+        gameManager.ClearTilesExceptMax();
     }
 
     private int GetXpFromTile(int value)

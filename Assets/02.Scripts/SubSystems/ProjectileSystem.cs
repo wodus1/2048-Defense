@@ -6,7 +6,7 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
     private GameManager gameManager;
     private PoolingSystem poolingSystem;
     private MonsterSystem monsterSystem;
-    private UpgradeSystem upgradeSystem;
+    private PlayerStatsSystem playerStatsSystem;
 
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private Transform projectileRoot;
@@ -14,24 +14,18 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
     private WaitForSeconds waitForSeconds;
     private int poolSize = 30;
     private Coroutine currentCoroutine;
-    private float damage = 5;
-    private float projectileSpeed = 900f;
-    private float attackSpeed = 1f;
     private float currentAttackSpeed;
 
     public void Initialize(GameManager gameManager)
     {
         this.gameManager = gameManager;
         poolSize = 30;
-        damage = 5;
-        projectileSpeed = 900f;
-        attackSpeed = 1f;
 
         poolingSystem = this.gameManager.SubSystemsManager.GetSubSystem<PoolingSystem>();
         monsterSystem = this.gameManager.SubSystemsManager.GetSubSystem<MonsterSystem>();
-        upgradeSystem = this.gameManager.SubSystemsManager.GetSubSystem<UpgradeSystem>();
+        playerStatsSystem = this.gameManager.SubSystemsManager.GetSubSystem<PlayerStatsSystem>();
 
-        currentAttackSpeed = attackSpeed * upgradeSystem.AttackSpeedMultiplier;
+        currentAttackSpeed = playerStatsSystem.FinalAttackSpeed;
         waitForSeconds = new WaitForSeconds(currentAttackSpeed);
         poolingSystem.CreatePool(projectilePrefab, projectileRoot, poolSize);
         currentCoroutine = StartCoroutine(ShotLogic());
@@ -45,14 +39,14 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
         gameManager = null;
         poolingSystem = null;
         monsterSystem = null;
-        upgradeSystem = null;
+        playerStatsSystem = null;
     }
 
     private IEnumerator ShotLogic()
     {
         while (true)
         {
-            float attackSpeed = this.attackSpeed * upgradeSystem.AttackSpeedMultiplier;
+            float attackSpeed = playerStatsSystem.FinalAttackSpeed;
             float newAttackSpeed = Mathf.Clamp(attackSpeed, 0.1f, float.MaxValue);
 
             if (!Mathf.Approximately(currentAttackSpeed, newAttackSpeed))
@@ -71,11 +65,8 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
 
             var projectile = poolingSystem.GetPool<Projectile>();
             projectile.Initialize(this);
-
-            float finalDamage = damage * upgradeSystem.DamageMultiplier;
-            float finalSpeed = projectileSpeed * upgradeSystem.ProjectileSpeedMultiplier;
-
-            projectile.Shoot(projectileRoot.position, targetPos, finalDamage, finalSpeed);
+            projectile.Shoot(projectileRoot.position, targetPos, 
+                playerStatsSystem.FinalDamage, playerStatsSystem.FinalProjectileSpeed);
         }
     }
 

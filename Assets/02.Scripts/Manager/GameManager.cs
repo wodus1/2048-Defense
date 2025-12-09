@@ -68,6 +68,31 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
         IsPause = true;
     }
 
+    public void ClearTilesExceptMax()
+    {
+        int row = 0;
+        int col = 0;
+        int max = 0;
+
+        for (int r = 0; r < 4; r++)
+        {
+            for (int c = 0; c < 4; c++)
+            {
+                if (map[r, c] > max)
+                {
+                    max = map[r, c];
+                    row = r;
+                    col = c;
+                }
+                map[r, c] = 0;
+            }
+        }
+
+        map[row, col] = max;
+
+        RefreshTiles();
+    }
+
     private void InitTiles()
     {
         for (int r = 0; r < 4; r++)

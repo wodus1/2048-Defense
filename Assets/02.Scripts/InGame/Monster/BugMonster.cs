@@ -21,6 +21,7 @@ public class BugMonster : Monster //공중 몬스터 오브젝트
 
         currentHp = NormalHp * hpMul;
         CurrentState = MonsterState.Move;
+        attackTime = 0;
     }
 
     private void Update()

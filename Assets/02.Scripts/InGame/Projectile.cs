@@ -33,7 +33,6 @@ public class Projectile : MonoBehaviour //투사체 오브젝트
 
         transform.position += direction * speed * Time.deltaTime;
 
-        float sqr = (transform.position - startPos).sqrMagnitude;
         if(Vector3.Distance(startPos, transform.position) > 1500)
         {
             owner.ReturnToPool(this);

@@ -21,6 +21,7 @@ public class RedMonster : Monster //기본 몬스터 오브젝트
 
         currentHp = NormalHp * hpMul;
         CurrentState = MonsterState.Move;
+        attackTime = 0;
     }
 
     private void Update()

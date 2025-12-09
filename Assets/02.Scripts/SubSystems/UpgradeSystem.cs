@@ -3,37 +3,27 @@ using System.Collections.Generic;
 
 public class UpgradeSystem : MonoBehaviour, ISubSystem //강화 시스템
 {
-    private GameManager gameManger;
+    private GameManager gameManager;
     private LevelSystem levelSystem;
+    private PlayerStatsSystem playerStatsSystem;
 
     [SerializeField] private List<Effect> effects = new List<Effect>();
     [SerializeField] private UpgradeUI upgradeUI;
 
-    private float damageMultiplier = 1f;
-    private float attackSpeedMultiplier = 1f;
-    private float projectileSpeedMultiplier = 1f;
-    private float attackSpeed = 1f;
-
-    public float DamageMultiplier => damageMultiplier;
-    public float AttackSpeedMultiplier => attackSpeedMultiplier;
-    public float ProjectileSpeedMultiplier => projectileSpeedMultiplier;
     public void Initialize(GameManager gameManager)
     {
-        this.gameManger = gameManager;
-        damageMultiplier = 1f;
-        attackSpeedMultiplier = 1f;
-        projectileSpeedMultiplier = 1f;
-        attackSpeed = 1f;
-
-        levelSystem = this.gameManger.SubSystemsManager.GetSubSystem<LevelSystem>();
+        this.gameManager = gameManager;
+        playerStatsSystem = this.gameManager.SubSystemsManager.GetSubSystem<PlayerStatsSystem>();
+        levelSystem = this.gameManager.SubSystemsManager.GetSubSystem<LevelSystem>();
         levelSystem.OnUpgrade += GetRandomEffects;
     }
 
     public void Deinitialize()
     {
         effects.Clear();
-        gameManger = null;
+        gameManager = null;
         levelSystem = null;
+        playerStatsSystem = null;
     }
 
     private void GetRandomEffects()
@@ -54,27 +44,32 @@ public class UpgradeSystem : MonoBehaviour, ISubSystem //강화 시스템
 
     public void AddDamageMultiplier(float delta)
     {
-        damageMultiplier += delta * 0.01f;
+        playerStatsSystem.AddDamageMultiplier(delta);
     }
 
     public void AddAttackSpeedMultiplier(float delta)
     {
-        attackSpeed += delta * 0.01f;
-        attackSpeedMultiplier = 1 / attackSpeed;
+        playerStatsSystem.AddAttackSpeedMultiplier(delta);
     }
 
     public void AddProjectileSpeedMultiplier(float delta)
     {
-        projectileSpeedMultiplier += delta * 0.01f;
+        playerStatsSystem.AddProjectileSpeedMultiplier(delta);
     }
 
     public void Resume()
     {
-        gameManger.Resume();
+        if (gameManager == null)
+            return;
+
+        gameManager.Resume();
     }
 
     public void Pause()
     {
-        gameManger.Pause();
+        if (gameManager == null)
+            return;
+
+        gameManager.Pause();
     }
 }
