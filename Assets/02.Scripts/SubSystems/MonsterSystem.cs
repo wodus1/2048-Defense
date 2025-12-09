@@ -139,6 +139,9 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
 
     public bool IsPause()
     {
+        if (gameManager == null)
+            return false;
+
         return gameManager.IsPause;
     }
 }

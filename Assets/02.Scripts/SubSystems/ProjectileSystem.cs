@@ -115,6 +115,9 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
 
     public bool IsPause()
     {
+        if (gameManager == null)
+            return false;
+
         return gameManager.IsPause;
     }
 }
