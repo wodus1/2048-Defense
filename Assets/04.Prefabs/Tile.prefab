@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   bgImage: {fileID: 1013993172000726058}
   valueText: {fileID: 3305861007198779035}
+  rectTransform: {fileID: 8818111880452335501}
 --- !u!1 &6225299809164891355
 GameObject:
   m_ObjectHideFlags: 0

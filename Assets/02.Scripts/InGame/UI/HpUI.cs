@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HpUI : MonoBehaviour
+public class HpUI : MonoBehaviour //Ã¼·Â ui view
 {
     [SerializeField] private RectTransform hpBarFill;
     private float hpWidth;

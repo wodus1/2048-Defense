@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
@@ -54,6 +55,11 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
         StopCoroutine(currentCoroutine);
         currentCoroutine = null;
         interval = null;
+
+        for (int i = monsterRoot.childCount - 1; i >= 0; i--)
+        {
+            Destroy(monsterRoot.GetChild(i).gameObject);
+        }
         monsters.Clear();
 
         gameManager = null;

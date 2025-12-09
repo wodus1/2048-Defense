@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class TileUI : MonoBehaviour //2048타일 ui view
 {
     [SerializeField] private Image bgImage;
     [SerializeField] private TextMeshProUGUI valueText;
+    [SerializeField] private RectTransform rectTransform;
     private Dictionary<int, Color32> colors = new Dictionary<int, Color32>()
     {
         { 0,     new Color32(255, 255, 255, 255) },
@@ -29,18 +31,23 @@ public class TileUI : MonoBehaviour //2048타일 ui view
         { -1, new Color32(51, 128, 186, 255) }
     };
     private int value;
-    public int Value => value;
 
     public void SetValue(int value)
     {
+        int oldValue = this.value;
         this.value = value;
-        
-        if(value == 0)
+
+        if (this.value == 0)
             valueText.text = "";
         else
-            valueText.text = value.ToString();
-        
-        UpdateColor(value);
+            valueText.text = this.value.ToString();
+
+        UpdateColor(this.value);
+
+        if (this.value != 0 && this.value != oldValue)
+        {
+            PlayPopAnimation();
+        }
     }
 
     void UpdateColor(int value)
@@ -51,5 +58,13 @@ public class TileUI : MonoBehaviour //2048타일 ui view
             col = colors[-1];
         }
         bgImage.color = col;
+    }
+
+    public void PlayPopAnimation()
+    {
+        rectTransform.DOKill();
+        Sequence seq = DOTween.Sequence();
+        seq.Append(rectTransform.DOScale(1.1f, 0.08f).SetEase(Ease.OutQuad));
+        seq.Append(rectTransform.DOScale(1.0f, 0.08f).SetEase(Ease.InQuad));
     }
 }

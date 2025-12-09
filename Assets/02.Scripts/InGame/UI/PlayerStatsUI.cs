@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerStatsUI : MonoBehaviour
+public class PlayerStatsUI : MonoBehaviour //플레이어 스탯 ui view
 {
     private PlayerStatsSystem playerStatsSystem;
 
@@ -11,18 +11,24 @@ public class PlayerStatsUI : MonoBehaviour
     [SerializeField] private TMP_Text attackSpeedValue;
     [SerializeField] private TMP_Text projectileSpeedValue;
     [SerializeField] private Button closeButton;
-    public Button StatsButton;
+    [SerializeField] private Button statsButton;
 
     public void Awake()
     {
         closeButton.onClick.RemoveAllListeners();
+        statsButton.onClick.RemoveAllListeners();
+
         closeButton.onClick.AddListener(OnClickCloseButton);
+        statsButton.onClick.AddListener(OnClickStatsButton);
     }
 
-    public void Initialize(PlayerStatsSystem playerStatsSystem, 
-        float attackDamage, float attackSpeed, float projectileSpeed)
+    public void Initialize(PlayerStatsSystem playerStatsSystem)
     {
         this.playerStatsSystem = playerStatsSystem;
+    }
+
+    public void SetStatsUI(float attackDamage, float attackSpeed, float projectileSpeed)
+    {
         statsPanel?.SetActive(true);
 
         attackValue.text = attackDamage.ToString("0.##");
@@ -34,5 +40,10 @@ public class PlayerStatsUI : MonoBehaviour
     {
         statsPanel?.SetActive(false);
         playerStatsSystem.Resume();
+    }
+
+    private void OnClickStatsButton()
+    {
+        playerStatsSystem.OnPlayerStatsUIStatsUI();
     }
 }

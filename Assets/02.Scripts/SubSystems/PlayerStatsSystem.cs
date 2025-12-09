@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerStatsSystem : MonoBehaviour, ISubSystem
+public class PlayerStatsSystem : MonoBehaviour, ISubSystem //플레이어 스탯 시스템
 {
     private GameManager gameManager;
     [SerializeField] PlayerStatsUI playerStatsUI;
@@ -21,20 +21,17 @@ public class PlayerStatsSystem : MonoBehaviour, ISubSystem
     public void Initialize(GameManager gameManager)
     {
         this.gameManager = gameManager;
+        playerStatsUI.Initialize(this);
 
         damageMultiplier = 1f;
         attackSpeedMultiplier = 1f;
         projectileSpeedMultiplier = 1f;
         attackSpeed = 1f;
-
-        playerStatsUI.StatsButton.onClick.RemoveAllListeners();
-        playerStatsUI.StatsButton.onClick.AddListener(OnPlayerStatsUIStatsUI);
     }
 
     public void Deinitialize()
     {
         gameManager = null;
-        playerStatsUI.StatsButton.onClick.RemoveAllListeners();
     }
 
     public void AddDamageMultiplier(float delta)
@@ -54,10 +51,10 @@ public class PlayerStatsSystem : MonoBehaviour, ISubSystem
         projectileSpeedMultiplier += delta * 0.01f;
     }
 
-    private void OnPlayerStatsUIStatsUI()
+    public void OnPlayerStatsUIStatsUI()
     {
         Pause();
-        playerStatsUI.Initialize(this, FinalDamage, FinalAttackSpeed, FinalProjectileSpeed);
+        playerStatsUI.SetStatsUI(FinalDamage, FinalAttackSpeed, FinalProjectileSpeed);
     }
 
     public void Resume()

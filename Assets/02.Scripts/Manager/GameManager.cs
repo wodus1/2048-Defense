@@ -9,6 +9,7 @@ enum InputState { Idle, Dragging }
 public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
 {
     [SerializeField] private SubSystemsManager subSystemsManager;
+    [SerializeField] private GameOverUI gameOverUI;
     [SerializeField] private List<TileUI> tiles = new List<TileUI>();
     private int[,] map = new int[4,4];
     private InputState inputState = InputState.Idle;
@@ -42,17 +43,19 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
         }
     }
 
-    private void InitGameSetting()
+    public void InitGameSetting()
     {
         Resume();
         InitTiles();
         subSystemsManager.Initialize(this);
         levelSystem = subSystemsManager.GetSubSystem<LevelSystem>();
+        gameOverUI.Initialize(this);
     }
 
     public void OnGameOver()
     {
         subSystemsManager.Deinitialize();
+        gameOverUI.GameOverPanel.SetActive(true);
         Pause();
     }
 
