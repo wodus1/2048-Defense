@@ -20,7 +20,6 @@ public class UpgradeSystem : MonoBehaviour, ISubSystem //강화 시스템
 
     public void Deinitialize()
     {
-        effects.Clear();
         gameManager = null;
         levelSystem = null;
         playerStatsSystem = null;

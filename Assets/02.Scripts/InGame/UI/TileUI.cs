@@ -32,6 +32,8 @@ public class TileUI : MonoBehaviour //2048타일 ui view
     };
     private int value;
 
+    public RectTransform RectTransform;
+
     public void SetValue(int value)
     {
         int oldValue = this.value;
@@ -64,7 +66,7 @@ public class TileUI : MonoBehaviour //2048타일 ui view
     {
         rectTransform.DOKill();
         Sequence seq = DOTween.Sequence();
-        seq.Append(rectTransform.DOScale(1.1f, 0.08f).SetEase(Ease.OutQuad));
-        seq.Append(rectTransform.DOScale(1.0f, 0.08f).SetEase(Ease.InQuad));
+        seq.Append(rectTransform.DOScale(1.1f, 0.07f).SetEase(Ease.OutBack));
+        seq.Append(rectTransform.DOScale(1.0f, 0.07f).SetEase(Ease.Linear));
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
@@ -12,6 +11,7 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
 
     [SerializeField] private Monster[] monsterPrefabs;
     [SerializeField] private Transform monsterRoot;
+    [SerializeField] private MonsterSystemUI monsterSystemUI;
 
     private List<Monster> monsters = new List<Monster>();
     private List<Vector2> spawnPositons = new List<Vector2>()
@@ -19,7 +19,7 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
 
     private int poolSize = 20;
     private WaitForSeconds interval;
-    private WaitForSeconds breakTime = new WaitForSeconds(10.0f);
+    private float breakTime = 10.0f;
     private Coroutine currentCoroutine;
 
     public List<Monster> Monsters => monsters;
@@ -79,9 +79,22 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
                 monster.CurrentState = Monster.MonsterState.Die;
             }
 
-            yield return breakTime;
+            gameManager.InputLocked = true;
+            monsterSystemUI.SetActive(true);
 
+            float t = breakTime;
+            while (t > 0)
+            {
+                t -= Time.deltaTime;
+                int time = Mathf.CeilToInt(t);
+                monsterSystemUI.SetTimer(time);
+
+                yield return null;
+            }
+
+            monsterSystemUI.SetActive(false);
             levelSystem.LevelUp();
+            gameManager.InputLocked = false;
         }
     }
 

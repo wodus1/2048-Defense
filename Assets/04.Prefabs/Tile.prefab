@@ -34,9 +34,9 @@ RectTransform:
   - {fileID: 1168398521737045515}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -540, y: -960}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1297212120443238835
@@ -92,6 +92,7 @@ MonoBehaviour:
   bgImage: {fileID: 1013993172000726058}
   valueText: {fileID: 3305861007198779035}
   rectTransform: {fileID: 8818111880452335501}
+  RectTransform: {fileID: 8818111880452335501}
 --- !u!1 &6225299809164891355
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,9 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class HpUI : MonoBehaviour //체력 ui view
 {
+    [SerializeField] private RectTransform hpBar;
     [SerializeField] private RectTransform hpBarFill;
     private float hpWidth;
 
@@ -17,5 +19,18 @@ public class HpUI : MonoBehaviour //체력 ui view
         var size = hpBarFill.sizeDelta;
         size.x = hpWidth * ratio;
         hpBarFill.sizeDelta = size;
+    }
+
+    public void DamageAnimation()
+    {
+        hpBar.DOKill();
+        hpBar.DOShakeAnchorPos(
+            duration: 0.2f,
+            strength: new Vector2(3f, 3f),
+            vibrato: 20,
+            randomness: 90,
+            snapping: false,
+            fadeOut: true
+        );
     }
 }

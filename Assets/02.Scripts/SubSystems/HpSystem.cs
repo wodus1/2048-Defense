@@ -25,6 +25,7 @@ public class HpSystem : MonoBehaviour, ISubSystem //체력 시스템
     {
         currentHp = Mathf.Max(0, currentHp - amount);
         hpUI.SetHP(currentHp);
+        hpUI.DamageAnimation();
 
         if (currentHp <= 0)
         {
