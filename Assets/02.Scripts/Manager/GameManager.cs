@@ -671,7 +671,6 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
     private void PlayTitleAnimation()
     {
         Array.Clear(hasMainTile, 0, hasMainTile.Length);
-        TileUI[,] newTileMap = new TileUI[4, 4];
 
         Sequence seq = DOTween.Sequence();
 
@@ -681,18 +680,21 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
             if (tile == null)
                 continue;
 
-            int startIndex = move.startRow * 4 + move.startCol;
-            int endIndex = move.endRow * 4 + move.endCol;
+            int startRow = move.startRow, startCol = move.startCol;
+            int endRow = move.endRow, endCol = move.endCol;
+            int value = move.value;
+
+            int startIndex = startRow * 4 + startCol;
+            int endIndex = endRow * 4 + endCol;
 
             var startPos = tilePos[startIndex].anchoredPosition;
             var endPos = tilePos[endIndex].anchoredPosition;
 
             tile.RectTransform.anchoredPosition = startPos;
 
-            bool isSecondMerged = move.merged && hasMainTile[move.endRow, move.endCol];
-            int endRow = move.endRow;
-            int endCol = move.endCol;
-            int value = move.value;
+            bool isSecondMerged = move.merged && hasMainTile[endRow, endCol];
+            
+            tileMap[startRow, startCol] = null;
 
             Tween tween = tile.RectTransform
                 .DOAnchorPos(endPos, 0.15f)
@@ -709,7 +711,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
             else
             {
                 hasMainTile[endRow, endCol] = true;
-                newTileMap[endRow, endCol] = tile;
+                tileMap[endRow, endCol] = tile;
 
                 tween.OnComplete(() =>
                 {
@@ -720,16 +722,6 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
             seq.Join(tween);
         }
 
-        seq.OnComplete(() =>
-        {
-            for (int r = 0; r < 4; r++)
-            {
-                for (int c = 0; c < 4; c++)
-                {
-                    tileMap[r, c] = newTileMap[r, c];
-                }
-            }
-            SpawnRandomTile();
-        });
+        seq.OnComplete(SpawnRandomTile);
     }
 }
