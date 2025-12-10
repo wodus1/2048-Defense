@@ -203,7 +203,6 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
         if (moved)
         {
             PlayTitleAnimation();
-            SpawnRandomTile();
         }
 
         inputState = InputState.Idle;
@@ -674,6 +673,8 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
         Array.Clear(hasMainTile, 0, hasMainTile.Length);
         TileUI[,] newTileMap = new TileUI[4, 4];
 
+        Sequence seq = DOTween.Sequence();
+
         foreach (var move in tileMoves)
         {
             var tile = tileMap[move.startRow, move.startCol];
@@ -689,37 +690,46 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
             tile.RectTransform.anchoredPosition = startPos;
 
             bool isSecondMerged = move.merged && hasMainTile[move.endRow, move.endCol];
+            int endRow = move.endRow;
+            int endCol = move.endCol;
+            int value = move.value;
+
+            Tween tween = tile.RectTransform
+                .DOAnchorPos(endPos, 0.15f)
+                .SetEase(Ease.OutQuad);
 
             if (isSecondMerged)
             {
-                tile.RectTransform.DOAnchorPos(endPos, 0.15f)
-                    .SetEase(Ease.OutQuad)
-                    .OnComplete(() =>
-                    {
-                        tile.gameObject.SetActive(false);
-                        tile.SetValue(0);
-                    });
+                tween.OnComplete(() =>
+                {
+                    tile.gameObject.SetActive(false);
+                    tile.SetValue(0);
+                });
             }
             else
             {
-                hasMainTile[move.endRow, move.endCol] = true;
-                newTileMap[move.endRow, move.endCol] = tile;
+                hasMainTile[endRow, endCol] = true;
+                newTileMap[endRow, endCol] = tile;
 
-                tile.RectTransform.DOAnchorPos(endPos, 0.15f)
-                    .SetEase(Ease.OutQuad)
-                    .OnComplete(() =>
-                    {
-                        tile.SetValue(move.value);
-                    });
+                tween.OnComplete(() =>
+                {
+                    tile.SetValue(value);
+                });
             }
+
+            seq.Join(tween);
         }
 
-        for (int r = 0; r < 4; r++)
+        seq.OnComplete(() =>
         {
-            for (int c = 0; c < 4; c++)
+            for (int r = 0; r < 4; r++)
             {
-                tileMap[r, c] = newTileMap[r, c];
+                for (int c = 0; c < 4; c++)
+                {
+                    tileMap[r, c] = newTileMap[r, c];
+                }
             }
-        }
+            SpawnRandomTile();
+        });
     }
 }
