@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
                     if (MoveLineLeft(r))
                         moved = true;
                 }
-                Debug.Log(moved);
+
                 break;
             case Direction.right:
                 for (int r = 0; r < 4; r++)
@@ -229,7 +229,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
                     if (MoveLineRight(r))
                         moved = true;
                 }
-                Debug.Log(moved);
+
                 break;
             case Direction.up:
                 for (int c = 0; c < 4; c++)
@@ -237,7 +237,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
                     if (MoveLineUp(c))
                         moved = true;
                 }
-                Debug.Log(moved);
+
                 break;
             case Direction.down:
                 for (int c = 0; c < 4; c++)
@@ -245,21 +245,8 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
                     if (MoveLineDown(c))
                         moved = true;
                 }
-                Debug.Log(moved);
-                break;
-        }
 
-        if(!moved)
-        {
-            for(int r = 0; r < 4; r++)
-            {
-                string line = "";
-                for (int c = 0; c < 4; c++)
-                {
-                    line += map[r, c] + " ";
-                }
-                Debug.Log(line);
-            }
+                break;
         }
 
         return moved;

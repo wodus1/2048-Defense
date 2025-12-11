@@ -20,11 +20,13 @@ public abstract class Monster : MonoBehaviour //몬스터 추상 클래스
     protected float currentHp;
     protected MonsterSystem monsterSystem;
     public MonsterState CurrentState;
+    private Rect safeAreaRect;
 
     protected void Awake()
     {
         Rect = GetComponent<RectTransform>();
         canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+        safeAreaRect = SafeAreaUtil.GetSafeAreaInCanvas(canvasRect);
         currentHp = NormalHp;
     }
 
@@ -50,10 +52,9 @@ public abstract class Monster : MonoBehaviour //몬스터 추상 클래스
     public bool IsVisible()
     {
         Vector2 localPos = canvasRect.InverseTransformPoint(Rect.position);
+        float topSafeY = safeAreaRect.yMax;
 
-        float halfH = canvasRect.rect.height * 0.5f;
-
-        return localPos.y <= halfH + 20f;
+        return localPos.y <= topSafeY + 10f;
     }
 
     public abstract void OnDie();

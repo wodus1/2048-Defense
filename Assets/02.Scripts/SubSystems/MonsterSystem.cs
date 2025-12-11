@@ -12,17 +12,29 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
     [SerializeField] private Monster[] monsterPrefabs;
     [SerializeField] private Transform monsterRoot;
     [SerializeField] private MonsterSystemUI monsterSystemUI;
+    [SerializeField] private Canvas canvas;
 
     private List<Monster> monsters = new List<Monster>();
-    private List<Vector2> spawnPositons = new List<Vector2>()
-    { new Vector2(-400, 1040), new Vector2(-200, 1040), new Vector2(0, 1040), new Vector2(200, 1040), new Vector2(400, 1040) };
+    private Vector2[] spawnPositons;
 
     private int poolSize = 20;
     private WaitForSeconds interval;
     private float breakTime = 10.0f;
     private Coroutine currentCoroutine;
+    private Rect safeAreaRect;
 
     public List<Monster> Monsters => monsters;
+
+    public void Start()
+    {
+        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+        safeAreaRect = SafeAreaUtil.GetSafeAreaInCanvas(canvasRect);
+        float spawnHeight = safeAreaRect.yMax + 40;
+
+        spawnPositons = new Vector2[] { new Vector2(-400, spawnHeight),
+            new Vector2(-200, spawnHeight), new Vector2(0, spawnHeight),
+            new Vector2(200, spawnHeight), new Vector2(400, spawnHeight) };
+    }
 
     public void Initialize(GameManager gameManager)
     {
@@ -70,6 +82,11 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
 
     private IEnumerator WaveLoop()
     {
+        while (spawnPositons == null || spawnPositons.Length == 0)
+        {
+            yield return null;
+        }
+
         while (true)
         {
             yield return SpawnMonster();
@@ -109,7 +126,7 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
         while (Time.time - startTime < 180f)
         {
             int monsterIdx = Random.Range(0, monsterPrefabs.Length);
-            int spawnIdx = Random.Range(0, spawnPositons.Count);
+            int spawnIdx = Random.Range(0, spawnPositons.Length);
 
             Monster monster = null;
             if (monsterPrefabs[monsterIdx] is BlueMonster)
