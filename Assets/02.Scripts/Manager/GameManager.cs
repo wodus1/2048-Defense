@@ -202,7 +202,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
 
         if (moved)
         {
-            PlayTitleAnimation();
+            PlayTileAnimation();
         }
 
         inputState = InputState.Idle;
@@ -664,11 +664,12 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
         tile.gameObject.SetActive(true);
         tile.RectTransform.anchoredPosition = targetPos.anchoredPosition;
         tile.SetValue(value);
+        tile.PlaySpawn();
 
         tileMap[r, c] = tile;
     }
 
-    private void PlayTitleAnimation()
+    private void PlayTileAnimation()
     {
         Array.Clear(hasMainTile, 0, hasMainTile.Length);
 
@@ -693,31 +694,21 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
             tile.RectTransform.anchoredPosition = startPos;
 
             bool isSecondMerged = move.merged && hasMainTile[endRow, endCol];
-            
+
             tileMap[startRow, startCol] = null;
 
-            Tween tween = tile.RectTransform
-                .DOAnchorPos(endPos, 0.15f)
-                .SetEase(Ease.OutQuad);
-
-            if (isSecondMerged)
-            {
-                tween.OnComplete(() =>
-                {
-                    tile.gameObject.SetActive(false);
-                    tile.SetValue(0);
-                });
-            }
-            else
+            if (!isSecondMerged)
             {
                 hasMainTile[endRow, endCol] = true;
                 tileMap[endRow, endCol] = tile;
-
-                tween.OnComplete(() =>
-                {
-                    tile.SetValue(value);
-                });
             }
+
+            Tween tween = tile.PlayMove(
+                endPos,
+                0.15f,
+                isSecondMerged,
+                value
+            );
 
             seq.Join(tween);
         }

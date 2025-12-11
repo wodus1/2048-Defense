@@ -69,4 +69,34 @@ public class TileUI : MonoBehaviour //2048타일 ui view
         seq.Append(rectTransform.DOScale(1.1f, 0.07f).SetEase(Ease.OutBack));
         seq.Append(rectTransform.DOScale(1.0f, 0.07f).SetEase(Ease.Linear));
     }
+
+    public void PlaySpawn()
+    {
+        RectTransform.localScale = Vector3.zero;
+        RectTransform.DOScale(1f, 0.1f).SetEase(Ease.OutBack);
+    }
+
+    public Tween PlayMove(Vector2 endPos, float duration, bool isSecondMerged, int newValue)
+    {
+        Tween tween = RectTransform.DOAnchorPos(endPos, duration)
+            .SetEase(Ease.OutQuad);
+
+        if (isSecondMerged)
+        {
+            tween.OnComplete(() =>
+            {
+                gameObject.SetActive(false);
+                SetValue(0);
+            });
+        }
+        else
+        {
+            tween.OnComplete(() =>
+            {
+                SetValue(newValue);
+            });
+        }
+
+        return tween;
+    }
 }
