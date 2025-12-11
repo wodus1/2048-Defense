@@ -113,3 +113,6 @@
 - `PlayerStatsUI` : 현재 전투 스탯 표시  
 - `MonsterSystemUI` : 웨이브/브레이크 타임 카운트다운  
 - `GameOverUI` : 게임 오버 시 재시작/로비 이동 처리
+
+## ▶ 모바일 대응
+- 모바일 해상도 대응을 위해 Canvas Scaler 조정 및 Safe Area를 사용해 UI를 구성하고 몬스터 스폰 위치를 해상도 비율 기반으로 계산하도록 구현했습니다.
