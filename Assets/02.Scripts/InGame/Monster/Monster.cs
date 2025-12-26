@@ -1,5 +1,6 @@
-using System.Threading;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Monster : MonoBehaviour //몬스터 추상 클래스
 {
@@ -21,11 +22,16 @@ public abstract class Monster : MonoBehaviour //몬스터 추상 클래스
     protected MonsterSystem monsterSystem;
     public MonsterState CurrentState;
     private Rect safeAreaRect;
+    private Image image;
+    private Color damageColor = new Color32(255, 171, 171, 255);
+    private Color normalColor = Color.white;
+    private Tween hitTween;
 
     protected void Awake()
     {
         Rect = GetComponent<RectTransform>();
         canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+        image = GetComponent<Image>();
         safeAreaRect = SafeAreaUtil.GetSafeAreaInCanvas(canvasRect);
         currentHp = NormalHp;
     }
@@ -35,6 +41,15 @@ public abstract class Monster : MonoBehaviour //몬스터 추상 클래스
     public virtual void TakeDamage(float damage)
     {
         if (currentHp <= 0f) return;
+
+        hitTween?.Kill(false);
+        hitTween = image.DOColor(damageColor, 0.06f)
+                     .SetEase(Ease.OutQuad)
+                     .OnComplete(() =>
+                     {
+                         hitTween = image.DOColor(normalColor, 0.12f)
+                                         .SetEase(Ease.OutQuad);
+                     });
 
         currentHp -= damage;
 
