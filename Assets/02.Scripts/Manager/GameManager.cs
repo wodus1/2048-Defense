@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
     private int[,] map = new int[4, 4];
     private TileUI[,] tileMap = new TileUI[4, 4];
     private List<tileMove> tileMoves = new List<tileMove>();
+    private List<(int matrixIdx, int value)> moveLines = new List<(int matrixIdx, int value)>(4);
+    private int[] newLines = new int[4];
+    List<(int r, int c)> emptyTiles = new List<(int r, int c)>();
     private bool[,] hasMainTile = new bool[4, 4];
 
     private InputState inputState = InputState.Idle;
@@ -202,6 +205,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
 
         if (moved)
         {
+            InputLocked = true;
             PlayTileAnimation();
         }
 
@@ -254,23 +258,22 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
 
     private void SpawnRandomTile()
     {
-        List<(int r, int c)> empty = new List<(int r, int c)>();
-
+        emptyTiles.Clear();
         for (int r = 0; r < 4; r++)
         {
             for (int c = 0; c < 4; c++)
             {
                 if (map[r, c] == 0)
-                    empty.Add((r, c));
+                    emptyTiles.Add((r, c));
             }
         }
 
-        if (empty.Count == 0)
+        if (emptyTiles.Count == 0)
         {
             return;
         }
 
-        var pos = empty[UnityEngine.Random.Range(0, empty.Count)];
+        var pos = emptyTiles[UnityEngine.Random.Range(0, emptyTiles.Count)];
 
         float v = UnityEngine.Random.Range(0f, 1f);
         int value = (v < 0.5f) ? 2 : 4;
@@ -284,32 +287,32 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
     private bool MoveLineRight(int r)
     {
         //0이 아닌 타일 저장
-        List<(int col, int value)> lines = new List<(int col, int value)>();
+        moveLines.Clear();
         for (int c = 3; c >= 0; c--)
         {
             int v = map[r, c];
             if (v != 0)
-                lines.Add((c, v));
+                moveLines.Add((c, v));
         }
 
-        if (lines.Count == 0)
+        if (moveLines.Count == 0)
             return false;
 
-        int[] newLine = new int[4];
+        Array.Clear(newLines, 0, newLines.Length);
         int colIdx = 3;
         int idx = 0;
 
-        while (idx < lines.Count)
+        while (idx < moveLines.Count)
         {
-            int c1 = lines[idx].col;
-            int value = lines[idx].value;
+            int c1 = moveLines[idx].matrixIdx;
+            int value = moveLines[idx].value;
 
-            if (idx + 1 < lines.Count && lines[idx + 1].value == value)
+            if (idx + 1 < moveLines.Count && moveLines[idx + 1].value == value)
             {
-                int c2 = lines[idx + 1].col;
+                int c2 = moveLines[idx + 1].matrixIdx;
                 int mergedValue = value * 2;
 
-                newLine[colIdx] = mergedValue;
+                newLines[colIdx] = mergedValue;
                 levelSystem.AddExp(mergedValue);
 
                 tileMoves.Add(new tileMove
@@ -337,7 +340,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
             }
             else
             {
-                newLine[colIdx] = value;
+                newLines[colIdx] = value;
 
                 tileMoves.Add(new tileMove
                 {
@@ -357,9 +360,9 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
         bool changed = false;
         for (int c = 0; c < 4; c++)
         {
-            if (map[r, c] != newLine[c])
+            if (map[r, c] != newLines[c])
             {
-                map[r, c] = newLine[c];
+                map[r, c] = newLines[c];
                 changed = true;
             }
         }
@@ -370,32 +373,32 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
     private bool MoveLineLeft(int r)
     {
         //0이 아닌 타일 저장
-        List<(int col, int value)> lines = new List<(int col, int value)>();
+        moveLines.Clear();
         for (int c = 0; c < 4; c++)
         {
             int v = map[r, c];
             if (v != 0)
-                lines.Add((c, v));
+                moveLines.Add((c, v));
         }
 
-        if (lines.Count == 0)
+        if (moveLines.Count == 0)
             return false;
 
-        int[] newLine = new int[4];
+        Array.Clear(newLines, 0, newLines.Length);
         int colIdx = 0;
         int idx = 0;
 
-        while (idx < lines.Count)
+        while (idx < moveLines.Count)
         {
-            int c1 = lines[idx].col;
-            int value = lines[idx].value;
+            int c1 = moveLines[idx].matrixIdx;
+            int value = moveLines[idx].value;
 
-            if (idx + 1 < lines.Count && lines[idx + 1].value == value)
+            if (idx + 1 < moveLines.Count && moveLines[idx + 1].value == value)
             {
-                int c2 = lines[idx + 1].col;
+                int c2 = moveLines[idx + 1].matrixIdx;
                 int mergedValue = value * 2;
 
-                newLine[colIdx] = mergedValue;
+                newLines[colIdx] = mergedValue;
                 levelSystem.AddExp(mergedValue);
 
                 tileMoves.Add(new tileMove
@@ -423,7 +426,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
             }
             else
             {
-                newLine[colIdx] = value;
+                newLines[colIdx] = value;
 
                 tileMoves.Add(new tileMove
                 {
@@ -443,9 +446,9 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
         bool changed = false;
         for (int c = 0; c < 4; c++)
         {
-            if (map[r, c] != newLine[c])
+            if (map[r, c] != newLines[c])
             {
-                map[r, c] = newLine[c];
+                map[r, c] = newLines[c];
                 changed = true;
             }
         }
@@ -456,34 +459,34 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
     private bool MoveLineUp(int c)
     {
         //0이 아닌 타일 저장
-        List<(int row, int value)> lines = new List<(int row, int value)>();
+        moveLines.Clear();
         for (int r = 0; r < 4; r++)
         {
             int v = map[r, c];
             if (v != 0)
-                lines.Add((r, v));
+                moveLines.Add((r, v));
         }
 
-        if (lines.Count == 0)
+        if (moveLines.Count == 0)
             return false;
 
-        int[] newCol = new int[4];
+        Array.Clear(newLines, 0, newLines.Length);
         int rowIdx = 0;
         int idx = 0;
 
-        while (idx < lines.Count)
+        while (idx < moveLines.Count)
         {
-            int r1 = lines[idx].row;
-            int value = lines[idx].value;
+            int r1 = moveLines[idx].matrixIdx;
+            int value = moveLines[idx].value;
 
             int targetRow = rowIdx;
 
-            if (idx + 1 < lines.Count && lines[idx + 1].value == value)
+            if (idx + 1 < moveLines.Count && moveLines[idx + 1].value == value)
             {
-                int r2 = lines[idx + 1].row;
+                int r2 = moveLines[idx + 1].matrixIdx;
                 int mergedValue = value * 2;
 
-                newCol[targetRow] = mergedValue;
+                newLines[targetRow] = mergedValue;
                 levelSystem.AddExp(mergedValue);
 
                 tileMoves.Add(new tileMove
@@ -511,7 +514,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
             }
             else
             {
-                newCol[targetRow] = value;
+                newLines[targetRow] = value;
 
                 tileMoves.Add(new tileMove
                 {
@@ -531,9 +534,9 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
         bool changed = false;
         for (int r = 0; r < 4; r++)
         {
-            if (map[r, c] != newCol[r])
+            if (map[r, c] != newLines[r])
             {
-                map[r, c] = newCol[r];
+                map[r, c] = newLines[r];
                 changed = true;
             }
         }
@@ -544,32 +547,32 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
     private bool MoveLineDown(int c)
     {
         //0이 아닌 타일 저장
-        List<(int row, int value)> lines = new List<(int row, int value)>();
+        moveLines.Clear();
         for (int r = 3; r >= 0; r--)
         {
             int v = map[r, c];
             if (v != 0)
-                lines.Add((r, v));
+                moveLines.Add((r, v));
         }
 
-        if (lines.Count == 0)
+        if (moveLines.Count == 0)
             return false;
 
-        int[] newCol = new int[4];
+        Array.Clear(newLines, 0, newLines.Length);
         int rowIdx = 3;
         int idx = 0;
 
-        while (idx < lines.Count)
+        while (idx < moveLines.Count)
         {
-            int r1 = lines[idx].row;
-            int value = lines[idx].value;
+            int r1 = moveLines[idx].matrixIdx;
+            int value = moveLines[idx].value;
 
-            if (idx + 1 < lines.Count && lines[idx + 1].value == value)
+            if (idx + 1 < moveLines.Count && moveLines[idx + 1].value == value)
             {
-                int r2 = lines[idx + 1].row;
+                int r2 = moveLines[idx + 1].matrixIdx;
                 int mergedValue = value * 2;
 
-                newCol[rowIdx] = mergedValue;
+                newLines[rowIdx] = mergedValue;
                 levelSystem.AddExp(mergedValue);
 
                 tileMoves.Add(new tileMove
@@ -597,7 +600,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
             }
             else
             {
-                newCol[rowIdx] = value;
+                newLines[rowIdx] = value;
 
                 tileMoves.Add(new tileMove
                 {
@@ -617,9 +620,9 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
         bool changed = false;
         for (int r = 0; r < 4; r++)
         {
-            if (map[r, c] != newCol[r])
+            if (map[r, c] != newLines[r])
             {
-                map[r, c] = newCol[r];
+                map[r, c] = newLines[r];
                 changed = true;
             }
         }
@@ -700,6 +703,12 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
             seq.Join(tween);
         }
 
-        seq.OnComplete(SpawnRandomTile);
+        seq.OnComplete(TileAnimComplete);
+    }
+
+    private void TileAnimComplete()
+    {
+        SpawnRandomTile();
+        InputLocked = false;
     }
 }
