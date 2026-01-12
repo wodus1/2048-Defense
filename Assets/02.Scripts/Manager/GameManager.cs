@@ -137,7 +137,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
     {
         foreach (var tile in tiles)
         {
-            tile.gameObject.SetActive(false);
+            tile.Hide();
             tile.SetValue(0);
         }
 
@@ -635,7 +635,7 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
     {
         foreach (var tile in tiles)
         {
-            if (!tile.gameObject.activeSelf)
+            if (!tile.IsUse)
                 return tile;
         }
 
@@ -651,9 +651,9 @@ public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
         int index = r * 4 + c;
         var targetPos = tilePos[index];
 
-        tile.gameObject.SetActive(true);
         tile.RectTransform.anchoredPosition = targetPos.anchoredPosition;
-        tile.SetValue(value);
+        tile.Show();
+        tile.SetValue(value, false);
         tile.PlaySpawn();
 
         tileMap[r, c] = tile;

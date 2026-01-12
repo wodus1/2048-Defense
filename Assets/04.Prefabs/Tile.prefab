@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1297212120443238835}
   - component: {fileID: 1013993172000726058}
   - component: {fileID: 8299082850397906966}
+  - component: {fileID: 1688947576594928920}
   m_Layer: 5
   m_Name: Tile
   m_TagString: Untagged
@@ -89,10 +90,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c6dcbfc19d9bb24dbd5ead2e83d8320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  canvasGroup: {fileID: 1688947576594928920}
   bgImage: {fileID: 1013993172000726058}
   valueText: {fileID: 3305861007198779035}
   rectTransform: {fileID: 8818111880452335501}
-  RectTransform: {fileID: 8818111880452335501}
+--- !u!225 &1688947576594928920
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3123588318322340581}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &6225299809164891355
 GameObject:
   m_ObjectHideFlags: 0
