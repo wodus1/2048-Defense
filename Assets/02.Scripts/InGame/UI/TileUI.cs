@@ -12,7 +12,6 @@ public class TileUI : MonoBehaviour //2048타일 ui view
     [SerializeField] private RectTransform rectTransform;
     
     private Dictionary<int, Color32> colors = new Dictionary<int, Color32>()
-        { 4096,  new Color32(77, 169, 255, 255) },
     { 
         { 0, new Color32(255, 255, 255, 255) },
         { 2, new Color32(237, 227, 217, 255) }, 
