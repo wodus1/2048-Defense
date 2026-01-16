@@ -32,13 +32,22 @@ public class TileUI : MonoBehaviour //2048타일 ui view
         { -1, new Color32(51, 128, 186, 255) }
     };
     private int value; 
-    private Tween popTween; 
+    private Tween popTween;
+    private Tween spawnTween;
     private bool isSecondMerged; 
     private int newValue;
     private bool isUse;
 
     public bool IsUse => isUse;
     public RectTransform RectTransform => rectTransform;
+
+    private void Awake()
+    {
+        popTween = rectTransform.DOScale(1.1f, 0.07f).SetEase(Ease.OutBack)
+            .SetLoops(2, LoopType.Yoyo).SetAutoKill(false).Pause();
+
+        spawnTween = rectTransform.DOScale(1f, 0.1f).SetEase(Ease.OutBack).SetAutoKill(false).Pause();
+    }
 
     public void SetValue(int value, bool playPop = true)
     { 
@@ -70,16 +79,14 @@ public class TileUI : MonoBehaviour //2048타일 ui view
 
     public void PlayPopAnimation() 
     {
-        popTween?.Kill(false); 
-        rectTransform.localScale = Vector3.one; 
-        popTween = rectTransform.DOScale(1.1f, 0.07f)
-            .SetEase(Ease.OutBack).SetLoops(2, LoopType.Yoyo);
+        rectTransform.localScale = Vector3.one;
+        popTween.Restart();
     }
 
     public void PlaySpawn() 
     { 
         rectTransform.localScale = Vector3.zero;
-        rectTransform.DOScale(1f, 0.1f).SetEase(Ease.OutBack); 
+        spawnTween.Restart();
     } 
 
     public Tween PlayMove(Vector2 endPos, float duration, bool isSecondMerged, int newValue) 
