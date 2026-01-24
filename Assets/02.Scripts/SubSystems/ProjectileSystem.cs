@@ -14,7 +14,6 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
     private WaitForSeconds waitForSeconds;
     private int poolSize = 30;
     private Coroutine currentCoroutine;
-    private float currentAttackSpeed;
 
     public void Initialize(GameManager gameManager)
     {
@@ -25,10 +24,11 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
         monsterSystem = this.gameManager.SubSystemsManager.GetSubSystem<MonsterSystem>();
         playerStatsSystem = this.gameManager.SubSystemsManager.GetSubSystem<PlayerStatsSystem>();
 
-        currentAttackSpeed = playerStatsSystem.FinalAttackSpeed;
-        waitForSeconds = new WaitForSeconds(currentAttackSpeed);
+        waitForSeconds = new WaitForSeconds(playerStatsSystem.GetFinalAttackSpeed());
         poolingSystem.CreatePool(projectilePrefab, projectileRoot, poolSize);
         currentCoroutine = StartCoroutine(ShotLogic());
+
+        playerStatsSystem.OnAttackSpeedChanged += UpdateAttackSpeed;
     }
 
     public void Deinitialize()
@@ -40,21 +40,14 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
         poolingSystem = null;
         monsterSystem = null;
         playerStatsSystem = null;
+
+        playerStatsSystem.OnAttackSpeedChanged -= UpdateAttackSpeed;
     }
 
     private IEnumerator ShotLogic()
     {
         while (true)
         {
-            float attackSpeed = playerStatsSystem.FinalAttackSpeed;
-            float newAttackSpeed = Mathf.Clamp(attackSpeed, 0.1f, float.MaxValue);
-
-            if (!Mathf.Approximately(currentAttackSpeed, newAttackSpeed))
-            {
-                currentAttackSpeed = newAttackSpeed;
-                waitForSeconds = new WaitForSeconds(currentAttackSpeed);
-            }
-
             yield return waitForSeconds;
 
             if (monsterSystem.Monsters == null || monsterSystem.Monsters.Count < 1)
@@ -66,7 +59,7 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
             var projectile = poolingSystem.GetPool<Projectile>();
             projectile.Initialize(this);
             projectile.Shoot(projectileRoot.position, targetPos, 
-                playerStatsSystem.FinalDamage, playerStatsSystem.FinalProjectileSpeed);
+                playerStatsSystem.GetFinalAttackSpeed(), playerStatsSystem.GetFinalProjectileSpeed());
         }
     }
 
@@ -110,5 +103,11 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
             return false;
 
         return gameManager.IsPause;
+    }
+
+    private void UpdateAttackSpeed(float newAttackSpeed)
+    {
+        float clampedAttackSpeed = Mathf.Clamp(newAttackSpeed, playerStatsSystem.NormalAttackSpeed, 10f);
+        waitForSeconds = new WaitForSeconds(1f / clampedAttackSpeed);
     }
 }

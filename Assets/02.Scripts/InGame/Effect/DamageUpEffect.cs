@@ -1,10 +1,13 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Effect/DamageUp")]
-public class DamageUpEffect : Effect //공격력 증가 효과
+[CreateAssetMenu(menuName = "Effect/DamageMultiplier")]
+public class DamageMultiplierEffect : Effect //공격력 증가 효과
 {
-    public override void Apply(UpgradeSystem upgradeSystem)
+    [SerializeField] private float value = 0.2f;
+    public float Value => value;
+
+    public override void Apply(PlayerStatsSystem playerStatsSystem, object source)
     {
-        upgradeSystem.AddDamageMultiplier(value);
+        playerStatsSystem.AddMultiplierEffect(this, source);
     }
 }

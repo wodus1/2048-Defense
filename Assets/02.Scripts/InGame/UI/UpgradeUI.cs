@@ -33,11 +33,11 @@ public class UpgradeUI : MonoBehaviour //강화 시스템 ui view
 
         upgradeUIPanel.SetActive(true);
 
-        effect1TitleText.text = effect1.title;
-        effect1DescriptionText.text = effect1.description;
+        effect1TitleText.text = effect1.Title;
+        effect1DescriptionText.text = effect1.Description;
 
-        effect2TitleText.text = effect2.title;
-        effect2DescriptionText.text = effect2.description;
+        effect2TitleText.text = effect2.Title;
+        effect2DescriptionText.text = effect2.Description;
 
         this.upgradeSystem.Pause();
     }
@@ -46,7 +46,7 @@ public class UpgradeUI : MonoBehaviour //강화 시스템 ui view
     {
         if (currentEffect1 == null || upgradeSystem == null) return;
 
-        currentEffect1.Apply(upgradeSystem);
+        currentEffect1.Apply(upgradeSystem.PlayerStatsSystem, upgradeSystem);
         upgradeUIPanel.SetActive(false);
 
         upgradeSystem.Resume();
@@ -56,7 +56,7 @@ public class UpgradeUI : MonoBehaviour //강화 시스템 ui view
     {
         if (currentEffect2 == null || upgradeSystem == null) return;
 
-        currentEffect2.Apply(upgradeSystem);
+        currentEffect2.Apply(upgradeSystem.PlayerStatsSystem, upgradeSystem);
         upgradeUIPanel.SetActive(false);
 
         upgradeSystem.Resume();

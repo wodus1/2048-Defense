@@ -10,6 +10,8 @@ public class UpgradeSystem : MonoBehaviour, ISubSystem //강화 시스템
     [SerializeField] private List<Effect> effects = new List<Effect>();
     [SerializeField] private UpgradeUI upgradeUI;
 
+    public PlayerStatsSystem PlayerStatsSystem => playerStatsSystem;
+
     public void Initialize(GameManager gameManager)
     {
         this.gameManager = gameManager;
@@ -22,7 +24,6 @@ public class UpgradeSystem : MonoBehaviour, ISubSystem //강화 시스템
     {
         gameManager = null;
         levelSystem = null;
-        playerStatsSystem = null;
     }
 
     private void GetRandomEffects()
@@ -39,21 +40,6 @@ public class UpgradeSystem : MonoBehaviour, ISubSystem //강화 시스템
         Effect effect2 = effects[secondIndex];
 
         upgradeUI.Initialize(this, effect1, effect2);
-    }
-
-    public void AddDamageMultiplier(float delta)
-    {
-        playerStatsSystem.AddDamageMultiplier(delta);
-    }
-
-    public void AddAttackSpeedMultiplier(float delta)
-    {
-        playerStatsSystem.AddAttackSpeedMultiplier(delta);
-    }
-
-    public void AddProjectileSpeedMultiplier(float delta)
-    {
-        playerStatsSystem.AddProjectileSpeedMultiplier(delta);
     }
 
     public void Resume()

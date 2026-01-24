@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e87eb5451baecc74888248ed68a1f847, type: 3}
-  m_Name: AttackSpeed UpEffect
-  m_EditorClassIdentifier: Assembly-CSharp::AttackSpeedUpEffect
+  m_Name: AttackSpeedMultiplier
+  m_EditorClassIdentifier: Assembly-CSharp::AttackSpeedMultiplierEffect
   title: "\uACF5\uACA9 \uC18D\uB3C4 \uC99D\uAC00"
   description: "\uACF5\uACA9 \uC18D\uB3C4 25% \uC99D\uAC00"
-  value: 25
+  value: 1.25

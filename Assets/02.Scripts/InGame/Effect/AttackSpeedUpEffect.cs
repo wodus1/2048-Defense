@@ -1,10 +1,13 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Effect/AttackSpeedUp")]
-public class AttackSpeedUpEffect : Effect //공격 속도 증가 효과
+[CreateAssetMenu(menuName = "Effect/AttackSpeedMultiplier")]
+public class AttackSpeedMultiplierEffect : Effect //공격 속도 증가 효과
 {
-    public override void Apply(UpgradeSystem upgradeSystem)
+    [SerializeField] private float value = 0.2f;
+    public float Value => value;
+    
+    public override void Apply(PlayerStatsSystem playerStatsSystem, object source)
     {
-        upgradeSystem.AddAttackSpeedMultiplier(value);
+        playerStatsSystem.AddMultiplierEffect(this, source);
     }
 }

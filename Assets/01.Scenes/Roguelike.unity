@@ -6771,9 +6771,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeSystem
   effects:
-  - {fileID: 11400000, guid: c42d0189c2d46b243a68324e9b927193, type: 2}
-  - {fileID: 11400000, guid: 184f272989fb79944aff67316340be05, type: 2}
-  - {fileID: 11400000, guid: abe5af7775deede42964a6e10fc550bd, type: 2}
+  - {fileID: 11400000, guid: b0491071b0dc5b046983fe4852a2d109, type: 2}
+  - {fileID: 11400000, guid: 658632acee461e848b868303a37209a7, type: 2}
+  - {fileID: 11400000, guid: 38adf4ce44935f14e9a736fafae846b5, type: 2}
   upgradeUI: {fileID: 2130445052}
 --- !u!114 &2130445052
 MonoBehaviour:

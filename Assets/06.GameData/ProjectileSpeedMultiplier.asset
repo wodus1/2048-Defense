@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 755ce39002ef2ba4f87b86eba159065e, type: 3}
-  m_Name: ProjectileSpeedUpEffect
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectileSpeedUpEffect
+  m_Name: ProjectileSpeedMultiplier
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileSpeedMultiplierEffect
   title: "\uD22C\uC0AC\uCCB4 \uC18D\uB3C4 \uC99D\uAC00"
   description: "\uD22C\uC0AC\uCCB4 \uC18D\uB3C4 30% \uC99D\uAC00"
-  value: 30
+  value: 1.3
