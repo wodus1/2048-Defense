@@ -23,13 +23,15 @@ public class UpgradeSystem : MonoBehaviour, ISubSystem //강화 시스템
     public void Deinitialize()
     {
         gameManager = null;
+
+        levelSystem.OnUpgrade -= GetRandomEffects;
         levelSystem = null;
     }
 
     private void GetRandomEffects()
     {
         int firstIndex = Random.Range(0, effects.Count);
-        Effect effect1 = effects[firstIndex];
+        Effect firstEffect = effects[firstIndex];
 
         int secondIndex = firstIndex;
         while (secondIndex == firstIndex)
@@ -37,9 +39,9 @@ public class UpgradeSystem : MonoBehaviour, ISubSystem //강화 시스템
             secondIndex = Random.Range(0, effects.Count);
         }
 
-        Effect effect2 = effects[secondIndex];
+        Effect secondEffect = effects[secondIndex];
 
-        upgradeUI.Initialize(this, effect1, effect2);
+        upgradeUI.Initialize(this, firstEffect, secondEffect);
     }
 
     public void Resume()

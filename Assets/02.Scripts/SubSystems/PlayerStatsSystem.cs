@@ -31,9 +31,7 @@ public class PlayerStatsSystem : MonoBehaviour, ISubSystem //ÇÃ·¹ÀÌ¾î ½ºÅÈ ½Ã½ºÅ
     {
         gameManager = null;
 
-        damageMultiplierEffects.Clear();
-        attackSpeedMultiplierEffects.Clear();
-        projectileSpeedMultiplierEffects.Clear();
+        RemoveMultiplierEffects();
     }
 
     public float GetFinalDamage()
@@ -78,6 +76,22 @@ public class PlayerStatsSystem : MonoBehaviour, ISubSystem //ÇÃ·¹ÀÌ¾î ½ºÅÈ ½Ã½ºÅ
         {
             projectileSpeedMultiplierEffects.Add((projectileSpeedMultiplierEffect, source));
         }
+    }
+
+    public void RemoveMultiplierEffect(object source)
+    {
+        damageMultiplierEffects.RemoveAll(e => e.source == source);
+        attackSpeedMultiplierEffects.RemoveAll(e => e.source == source);
+        projectileSpeedMultiplierEffects.RemoveAll(e => e.source == source);
+
+        OnAttackSpeedChanged?.Invoke(GetFinalAttackSpeed());
+    }
+
+    private void RemoveMultiplierEffects()
+    {
+        damageMultiplierEffects.Clear();
+        attackSpeedMultiplierEffects.Clear();
+        projectileSpeedMultiplierEffects.Clear();
     }
 
     public void OnPlayerStatsUIStatsUI()
