@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BgUI : MonoBehaviour
+public class BgUI : MonoBehaviour // 배경 ui 초기화
 {
     [SerializeField] RectTransform canvasRect;
     [SerializeField] RectTransform bgTopImage;

@@ -1,8 +1,8 @@
-using TMPro;
+ï»¿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerStatsUI : MonoBehaviour //ÇÃ·¹ÀÌ¾î ½ºÅÈ ui view
+public class PlayerStatsUI : MonoBehaviour // í”Œë ˆì´ì–´ ìŠ¤íƒ¯ ui view
 {
     private PlayerStatsSystem playerStatsSystem;
 

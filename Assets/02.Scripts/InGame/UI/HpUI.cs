@@ -1,7 +1,7 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 
-public class HpUI : MonoBehaviour //ü�� ui view
+public class HpUI : MonoBehaviour // 체력 ui view
 {
     [SerializeField] private RectTransform hpBar;
     [SerializeField] private RectTransform hpBarFill;

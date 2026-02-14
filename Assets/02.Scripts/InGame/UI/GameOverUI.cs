@@ -1,8 +1,8 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameOverUI : MonoBehaviour //°ÔÀÓ ¿À¹ö ui view
+public class GameOverUI : MonoBehaviour // ê²Œìž„ ì˜¤ë²„ ui view
 {
     private GameManager gameManager;
     [SerializeField] private Button restartButton;

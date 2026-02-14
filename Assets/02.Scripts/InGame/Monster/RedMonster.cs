@@ -1,6 +1,6 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-public class RedMonster : Monster //±âº» ¸ó½ºÅÍ ¿ÀºêÁ§Æ®
+public class RedMonster : Monster // ê¸°ë³¸ ëª¬ìŠ¤í„° ì˜¤ë¸Œì íŠ¸
 {
     protected override float NormalHp => 40f;
     protected override float NormalSpeed => 15f;

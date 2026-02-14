@@ -1,8 +1,8 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolingSystem : MonoBehaviour, ISubSystem //Ç®¸µ ½Ã½ºÅÛ
+public class PoolingSystem : MonoBehaviour, ISubSystem // í’€ë§ ì‹œìŠ¤í…œ
 {
     private GameManager gameManger;
     private Dictionary<Type, IObjectPool> pools = new Dictionary<Type, IObjectPool>();

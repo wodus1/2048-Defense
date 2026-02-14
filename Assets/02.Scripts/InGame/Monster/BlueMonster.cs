@@ -1,6 +1,6 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-public class BlueMonster : Monster //ÅÊÄ¿ ¸ó½ºÅÍ ¿ÀºêÁ§Æ®
+public class BlueMonster : Monster // íƒ±ì»¤ ëª¬ìŠ¤í„° ì˜¤ë¸Œì íŠ¸
 {
     protected override float NormalHp => 50f;
     protected override float NormalSpeed => 12f;

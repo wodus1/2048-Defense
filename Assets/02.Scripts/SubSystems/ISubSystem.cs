@@ -1,4 +1,4 @@
-public interface ISubSystem //¼­ºê ½Ã½ºÅÛ ÀÎÅÍÆäÀÌ½º
+ï»¿public interface ISubSystem // ì„œë¸Œ ì‹œìŠ¤í…œ ì¸í„°í˜ì´ìŠ¤
 {
     void Initialize(GameManager gameManager);
     void Deinitialize();

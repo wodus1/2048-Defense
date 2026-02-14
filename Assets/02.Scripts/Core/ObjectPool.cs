@@ -1,12 +1,12 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
-public interface IObjectPool //¿ÀºêÁ§Æ® Ç®¸µ ÀÎÅÍÆäÀÌ½º
+public interface IObjectPool // ì˜¤ë¸Œì íŠ¸ í’€ë§ ì¸í„°í˜ì´ìŠ¤
 {
     void ClearPool();
 }
 
-public class ObjectPool<T> : IObjectPool where T : Component //°ø¿ë ¿ÀºêÁ§Æ® Ç®
+public class ObjectPool<T> : IObjectPool where T : Component // ê³µìš© ì˜¤ë¸Œì íŠ¸ í’€
 {
     private Stack<T> stack = new Stack<T>();
     private T prefab;

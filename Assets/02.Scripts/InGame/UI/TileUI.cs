@@ -1,10 +1,10 @@
-using DG.Tweening;
+﻿ using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TileUI : MonoBehaviour //2048타일 ui view
+public class TileUI : MonoBehaviour // 2048타일 ui view
 {
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private Image bgImage;

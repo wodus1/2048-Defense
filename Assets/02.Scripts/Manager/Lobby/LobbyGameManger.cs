@@ -1,8 +1,8 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LobbyGameManger : MonoBehaviour //·Îºñ °ÔÀÓ ¸Å´ÏÀú
+public class LobbyGameManger : MonoBehaviour // ë¡œë¹„ ê²Œìž„ ë§¤ë‹ˆì €
 {
     [SerializeField] Button startButton;
 

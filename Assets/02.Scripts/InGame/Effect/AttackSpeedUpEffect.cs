@@ -1,13 +1,13 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Effect/AttackSpeedMultiplier")]
-public class AttackSpeedMultiplierEffect : Effect //°ø°Ý ¼Óµµ Áõ°¡ È¿°ú
+public class AttackSpeedMultiplierEffect : Effect // ê³µê²© ì†ë„ ì¦ê°€ íš¨ê³¼
 {
     [SerializeField] private float value = 0.2f;
     public float Value => value;
     
-    public override void Apply(PlayerStatsSystem playerStatsSystem, object source)
+    public override void Apply(PlayerStatsSystem playerStatsSystem, object handle)
     {
-        playerStatsSystem.AddMultiplierEffect(this, source);
+        playerStatsSystem.AddMultiplierEffect(this, handle);
     }
 }

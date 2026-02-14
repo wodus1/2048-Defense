@@ -1,8 +1,8 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatsSystem : MonoBehaviour, ISubSystem //ÇÃ·¹ÀÌ¾î ½ºÅÈ ½Ã½ºÅÛ
+public class PlayerStatsSystem : MonoBehaviour, ISubSystem // í”Œë ˆì´ì–´ ìŠ¤íƒ¯ ì‹œìŠ¤í…œ
 {
     private GameManager gameManager;
     [SerializeField] PlayerStatsUI playerStatsUI;
@@ -11,12 +11,12 @@ public class PlayerStatsSystem : MonoBehaviour, ISubSystem //ÇÃ·¹ÀÌ¾î ½ºÅÈ ½Ã½ºÅ
     private float normalAttackSpeed = 1f;
     private float normalProjectileSpeed = 900f;
 
-    private List<(DamageMultiplierEffect effect, object source)> damageMultiplierEffects= 
-        new List<(DamageMultiplierEffect effect, object source)>();
-    private List<(AttackSpeedMultiplierEffect effect, object source)> attackSpeedMultiplierEffects = 
-        new List<(AttackSpeedMultiplierEffect effect, object source)>();
-    private List<(ProjectileSpeedMultiplierEffect effect, object source)> projectileSpeedMultiplierEffects = 
-        new List<(ProjectileSpeedMultiplierEffect effect, object source)>();
+    private List<(DamageMultiplierEffect effect, object handle)> damageMultiplierEffects= 
+        new List<(DamageMultiplierEffect effect, object handle)>();
+    private List<(AttackSpeedMultiplierEffect effect, object handle)> attackSpeedMultiplierEffects = 
+        new List<(AttackSpeedMultiplierEffect effect, object handle)>();
+    private List<(ProjectileSpeedMultiplierEffect effect, object handle)> projectileSpeedMultiplierEffects = 
+        new List<(ProjectileSpeedMultiplierEffect effect, object handle)>();
 
     public Action<float> OnAttackSpeedChanged;
     public float NormalAttackSpeed => normalAttackSpeed;
@@ -61,28 +61,28 @@ public class PlayerStatsSystem : MonoBehaviour, ISubSystem //ÇÃ·¹ÀÌ¾î ½ºÅÈ ½Ã½ºÅ
         return finalProjectileSpeed;
     }
 
-    public void AddMultiplierEffect(Effect effect, object source)
+    public void AddMultiplierEffect(Effect effect, object handle)
     {
         if (effect is DamageMultiplierEffect damageMultiplierEffect)
         {
-            damageMultiplierEffects.Add((damageMultiplierEffect, source));
+            damageMultiplierEffects.Add((damageMultiplierEffect, handle));
         }
         else if (effect is AttackSpeedMultiplierEffect attackSpeedMultiplierEffect)
         {
-            attackSpeedMultiplierEffects.Add((attackSpeedMultiplierEffect, source));
+            attackSpeedMultiplierEffects.Add((attackSpeedMultiplierEffect, handle));
             OnAttackSpeedChanged?.Invoke(GetFinalAttackSpeed());
         }
         else if (effect is ProjectileSpeedMultiplierEffect projectileSpeedMultiplierEffect)
         {
-            projectileSpeedMultiplierEffects.Add((projectileSpeedMultiplierEffect, source));
+            projectileSpeedMultiplierEffects.Add((projectileSpeedMultiplierEffect, handle));
         }
     }
 
-    public void RemoveMultiplierEffect(object source)
+    public void RemoveMultiplierEffect(object handle)
     {
-        damageMultiplierEffects.RemoveAll(e => e.source == source);
-        attackSpeedMultiplierEffects.RemoveAll(e => e.source == source);
-        projectileSpeedMultiplierEffects.RemoveAll(e => e.source == source);
+        damageMultiplierEffects.RemoveAll(e => e.handle == handle);
+        attackSpeedMultiplierEffects.RemoveAll(e => e.handle == handle);
+        projectileSpeedMultiplierEffects.RemoveAll(e => e.handle == handle);
 
         OnAttackSpeedChanged?.Invoke(GetFinalAttackSpeed());
     }

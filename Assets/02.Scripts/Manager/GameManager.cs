@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,7 +7,7 @@ using DG.Tweening;
 enum Direction { left, right, up, down }
 enum InputState { Idle, Dragging }
 
-public class GameManager : MonoBehaviour //게임 매니저(2048 로직)
+public class GameManager : MonoBehaviour // 게임 매니저(2048 로직)
 {
     private struct tileMove
     {

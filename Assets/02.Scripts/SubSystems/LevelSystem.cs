@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using UnityEngine;
 
-public class LevelSystem : MonoBehaviour, ISubSystem //레벨업 시스템
+public class LevelSystem : MonoBehaviour, ISubSystem // 레벨업 시스템
 {
     private GameManager gameManager;
     private int level = 1;

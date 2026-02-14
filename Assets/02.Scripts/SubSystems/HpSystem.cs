@@ -1,7 +1,7 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.Rendering;
 
-public class HpSystem : MonoBehaviour, ISubSystem //Ã¼·Â ½Ã½ºÅÛ
+public class HpSystem : MonoBehaviour, ISubSystem // ì²´ë ¥ ì‹œìŠ¤í…œ
 {
     private GameManager gameManager;
     [SerializeField] private HpUI hpUI;

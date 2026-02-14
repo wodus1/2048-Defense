@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class UpgradeSystem : MonoBehaviour, ISubSystem //강화 시스템
+public class UpgradeSystem : MonoBehaviour, ISubSystem // 강화 시스템
 {
     private GameManager gameManager;
     private LevelSystem levelSystem;

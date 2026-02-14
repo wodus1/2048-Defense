@@ -1,8 +1,8 @@
-using TMPro;
+ï»¿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpgradeUI : MonoBehaviour //°­È­ ½Ã½ºÅÛ ui view
+public class UpgradeUI : MonoBehaviour // ê°•í™” ì‹œìŠ¤í…œ ui view
 {
     [SerializeField] private GameObject upgradeUIPanel;
     [SerializeField] private Button effect1Button;

@@ -1,13 +1,13 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Effect/DamageMultiplier")]
-public class DamageMultiplierEffect : Effect //°ø°Ý·Â Áõ°¡ È¿°ú
+public class DamageMultiplierEffect : Effect // ê³µê²©ë ¥ ì¦ê°€ íš¨ê³¼
 {
     [SerializeField] private float value = 0.2f;
     public float Value => value;
 
-    public override void Apply(PlayerStatsSystem playerStatsSystem, object source)
+    public override void Apply(PlayerStatsSystem playerStatsSystem, object handle)
     {
-        playerStatsSystem.AddMultiplierEffect(this, source);
+        playerStatsSystem.AddMultiplierEffect(this, handle);
     }
 }

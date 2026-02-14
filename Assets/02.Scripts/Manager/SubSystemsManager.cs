@@ -1,8 +1,8 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class SubSystemsManager : MonoBehaviour //¼­ºê ½Ã½ºÅÛ ¸Å´ÏÀú
+public class SubSystemsManager : MonoBehaviour // ì„œë¸Œ ì‹œìŠ¤í…œ ë§¤ë‹ˆì €
 {
     private GameManager gameManager;
     private Dictionary<Type, ISubSystem> subSystems = new Dictionary<Type, ISubSystem>();

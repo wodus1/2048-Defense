@@ -1,7 +1,7 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-public class MonsterSystemUI : MonoBehaviour
+public class MonsterSystemUI : MonoBehaviour // 휴식 시간 타이머 ui view
 {
     [SerializeField] private TMP_Text breaktimeText;
     private string originalText;

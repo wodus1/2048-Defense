@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
-public class ProjectileSystem : MonoBehaviour, ISubSystem //투사체 시스템
+public class ProjectileSystem : MonoBehaviour, ISubSystem // 투사체 시스템
 {
     private GameManager gameManager;
     private PoolingSystem poolingSystem;

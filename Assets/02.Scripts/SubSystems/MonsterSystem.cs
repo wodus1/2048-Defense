@@ -1,8 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
+public class MonsterSystem : MonoBehaviour, ISubSystem // 몬스터 시스템
 {
     private GameManager gameManager;
     private PoolingSystem poolingSystem;
@@ -161,11 +161,11 @@ public class MonsterSystem : MonoBehaviour, ISubSystem //몬스터 시스템
         {
             poolingSystem.ReturnPool(blueMonster);
         }
-        else if (monster is BlueMonster BugMonster)
+        else if (monster is BugMonster BugMonster)
         {
             poolingSystem.ReturnPool(BugMonster);
         }
-        else if (monster is BlueMonster RedMonster)
+        else if (monster is RedMonster RedMonster)
         {
             poolingSystem.ReturnPool(RedMonster);
         }

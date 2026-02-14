@@ -1,8 +1,8 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Monster : MonoBehaviour //¸ó½ºÅÍ Ãß»ó Å¬·¡½º
+public abstract class Monster : MonoBehaviour // ëª¬ìŠ¤í„° ì¶”ìƒ í´ë˜ìŠ¤
 {
     public enum MonsterState
     {

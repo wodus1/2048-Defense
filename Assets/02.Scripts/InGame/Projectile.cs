@@ -1,7 +1,7 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour //Åõ»çÃ¼ ¿ÀºêÁ§Æ®
+public class Projectile : MonoBehaviour // íˆ¬ì‚¬ì²´ ì˜¤ë¸Œì íŠ¸
 {
     private ProjectileSystem owner;
     private Vector3 startPos;
