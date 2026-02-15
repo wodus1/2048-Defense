@@ -11,7 +11,7 @@ public class LobbyGameManger : MonoBehaviour // 로비 게임 매니저
     {
         startButton.onClick.RemoveAllListeners();
         startButton.onClick.AddListener(OnClickGuestLogin);
-        playFabManager.OnLoginSuccess += LoadSceneAsync;
+        playFabManager.OnLoginSuccess += OnLoginSuccess;
     }
 
     private void OnClickGuestLogin()
@@ -19,13 +19,19 @@ public class LobbyGameManger : MonoBehaviour // 로비 게임 매니저
         playFabManager.LoginGuest();
     }
 
-    private void LoadSceneAsync()
+    private async void OnLoginSuccess()
     {
-        SceneManager.LoadSceneAsync("Roguelike");
+        if (SaveManager.Instance != null)
+        {
+            await SaveManager.Instance.AfterLoginAsync();
+        }
+
+        _= SceneManager.LoadSceneAsync("Roguelike");
     }
+
 
     private void OnDestroy()
     {
-        playFabManager.OnLoginSuccess -= LoadSceneAsync;
+        playFabManager.OnLoginSuccess -= OnLoginSuccess;
     }
 }
