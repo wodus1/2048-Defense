@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class AttackItemEffect : ItemEffect // 공격형 아이템
+public abstract class AttackItemEffect : ItemEffect // 몬스터 공격 아이템
 {
     public override void Execute(ItemUseContext itemUseContext)
     {

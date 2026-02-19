@@ -33,6 +33,8 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem // 투사체 시스템
 
     public void Deinitialize()
     {
+        playerStatsSystem.OnAttackSpeedChanged -= UpdateAttackSpeed;
+
         StopCoroutine(currentCoroutine);
         currentCoroutine = null;
 
@@ -40,8 +42,6 @@ public class ProjectileSystem : MonoBehaviour, ISubSystem // 투사체 시스템
         poolingSystem = null;
         monsterSystem = null;
         playerStatsSystem = null;
-
-        playerStatsSystem.OnAttackSpeedChanged -= UpdateAttackSpeed;
     }
 
     private IEnumerator ShotLogic()

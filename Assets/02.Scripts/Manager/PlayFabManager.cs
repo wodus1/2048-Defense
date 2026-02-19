@@ -73,6 +73,13 @@ public class PlayFabManager : MonoBehaviour // 게스트 로그인 구현
             });
     }
 
+    public void Logout()
+    {
+        PlayFabClientAPI.ForgetAllCredentials();
+        isLoggedIn = false;
+        playfabId = null;
+    }
+
 #if UNITY_EDITOR
     [ContextMenu("ClearGuestId")]
     private void CleearGuestId()

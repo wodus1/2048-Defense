@@ -40,7 +40,6 @@ public class PlayerData // 유저 데이터 모델
     public void AddItem(string itemId, int amount)
     {
         if (string.IsNullOrEmpty(itemId) || amount <= 0) return;
-            return;
 
         items.TryGetValue(itemId, out int cur);
         items[itemId] = cur + amount;

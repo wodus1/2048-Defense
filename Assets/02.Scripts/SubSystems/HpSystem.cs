@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Rendering;
 
 public class HpSystem : MonoBehaviour, ISubSystem // 체력 시스템
 {

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b55bf5e87ee0b840bf9f463e3a974c6, type: 3}
+  m_Name: PosionItem
+  m_EditorClassIdentifier: Assembly-CSharp::AllMonsterAttackOverTime
+  item: {fileID: 21300000, guid: b55cb07e68d2b4e139ec04502f63fd7f, type: 3}
+  title: "\uB3C5\uC57D"
+  description: "\uB3C5\uC744 \uBFCC\uB824 10\uCD08\uAC04 \uBAA8\uB4E0 \uC801\uC5D0\uAC8C
+    1\uCD08\uB9C8\uB2E4 3\uC5D0 \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4"
+  price: 30
+  damage: 3
+  duration: 10
+  interval: 1
