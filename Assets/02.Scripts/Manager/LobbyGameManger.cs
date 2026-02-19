@@ -7,6 +7,7 @@ public class LobbyGameManger : MonoBehaviour // 로비 게임 매니저
     [SerializeField] private Canvas loginCanvas;
     [SerializeField] private Canvas lobbyCanvas;
     [SerializeField] private StoreController storeController;
+    [SerializeField] private BagController bagController;
     [SerializeField] private Button loginButton;
     [SerializeField] private Button startButton;
     [SerializeField] private Button homeButton;
@@ -76,7 +77,7 @@ public class LobbyGameManger : MonoBehaviour // 로비 게임 매니저
 
     private void OnClickBag()
     {
-        
+        bagController.gameObject.SetActive(true);
     }
 
     private void OnClickStart()
