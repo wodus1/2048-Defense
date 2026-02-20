@@ -13,7 +13,6 @@ public class SaveManager : MonoBehaviour // 데이터 관리 매지저
     public bool IsSaving { get; private set; }
     public PendingSave Pending { get; private set; }
 
-
     private void Awake()
     {
         if (Instance != null && Instance != this)

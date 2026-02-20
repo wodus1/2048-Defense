@@ -9,6 +9,8 @@ public class AllMonsterAttackOverTime : AttackOverTimeItemEffect // 모든 몬�
     [SerializeField] private float duration = 5f;
     [SerializeField] private float interval = 1f;
 
+    public override float Duration => duration;
+
     public override void AttackOverTimeExecute(ItemUseContext itemUseContext)
     {
         if(itemUseContext.MonstersSyetem != null)
@@ -32,7 +34,7 @@ public class AllMonsterAttackOverTime : AttackOverTimeItemEffect // 모든 몬�
             }
 
             duration -= 1;
-            yield return null;
+            yield return wfs;
         }
     }
 }

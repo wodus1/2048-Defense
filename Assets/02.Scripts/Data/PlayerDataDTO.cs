@@ -9,6 +9,7 @@ public class PlayerDataDTO // PlayerData DTO 변환
     public List<ItemPair> items = new List<ItemPair>();
     public int revision;
     public long lastSavedAtUnix;
+    public string[] equipped = new string[3];
 
     [Serializable]
     public class ItemPair
@@ -23,7 +24,8 @@ public class PlayerDataDTO // PlayerData DTO 변환
         {
             gold = playerData.gold,
             revision = playerData.revision,
-            lastSavedAtUnix = playerData.lastSavedAtUnix
+            lastSavedAtUnix = playerData.lastSavedAtUnix,
+            equipped = (string[])playerData.equipped.Clone()
         };
 
         foreach (var item in playerData.items)
@@ -39,7 +41,8 @@ public class PlayerDataDTO // PlayerData DTO 변환
             gold = gold,
             revision = revision,
             lastSavedAtUnix = lastSavedAtUnix,
-            items = new Dictionary<string, int>()
+            items = new Dictionary<string, int>(),
+            equipped = (string[])equipped.Clone()
         };
 
         if (items != null)

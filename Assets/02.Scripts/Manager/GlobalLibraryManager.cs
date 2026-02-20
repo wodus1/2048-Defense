@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-public class GlobalLibraryManager : MonoBehaviour
+public class GlobalLibraryManager : MonoBehaviour // 글로벌 라이브러리 매니저
 {
     public static GlobalLibraryManager Instance { get; private set; }
 

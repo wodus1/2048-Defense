@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 [CreateAssetMenu(menuName = "Item/Buff")]
-public class BuffItemEffect : ItemEffect // 버프형 아이템
+public class BuffItemEffect : ItemEffect, IDurationItem // 버프형 아이템
 {
     [SerializeField] private List<Effect> effect;
     [SerializeField] private float duration = 5f;
+
+    public float Duration => duration;
 
     public override void Execute(ItemUseContext itemUseContext)
     {

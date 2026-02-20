@@ -6,7 +6,7 @@ public sealed class ItemUseContext // 아이템 사용 시 필요한 컨텍스�
     public MonsterSystem MonstersSyetem { get; }
     public object Handle { get; }
 
-    public ItemUseContext(PlayerStatsSystem playerStats, MonsterSystem monsters, Transform userTransform, object handle)
+    public ItemUseContext(PlayerStatsSystem playerStats, MonsterSystem monsters, object handle)
     {
         PlayerStatsSystem = playerStats;
         MonstersSyetem = monsters;
