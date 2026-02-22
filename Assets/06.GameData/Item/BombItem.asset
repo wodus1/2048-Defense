@@ -17,4 +17,5 @@ MonoBehaviour:
   description: "\uD3ED\uD0C4\uC744 \uD130\uD2B8\uB824 \uBAA8\uB4E0 \uC801\uC5D0\uAC8C
     20\uC5D0 \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4"
   price: 20
+  particle: {fileID: 198443811669059634, guid: 12c5a36b60a39734f80150bc3e23e850, type: 3}
   damage: 25

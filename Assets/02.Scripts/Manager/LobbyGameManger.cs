@@ -16,9 +16,9 @@ public class LobbyGameManger : MonoBehaviour // 로비 게임 매니저
 
     private bool isLogin = false;
 
-    private void Start()
+    private void Awake()
     {
-        if (!PlayFabManager.Instance.IsLoggedIn)
+        if (PlayFabManager.Instance == null || !PlayFabManager.Instance.IsLoggedIn)
         {
             lobbyCanvas.gameObject.SetActive(false);
             loginCanvas.gameObject.SetActive(true);
@@ -28,7 +28,10 @@ public class LobbyGameManger : MonoBehaviour // 로비 게임 매니저
             lobbyCanvas.gameObject.SetActive(true);
             loginCanvas.gameObject.SetActive(false);
         }
+    }
 
+    private void Start()
+    {
         loginButton.onClick.RemoveAllListeners();
         startButton.onClick.RemoveAllListeners();
         homeButton.onClick.RemoveAllListeners();

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour // 투사체 오브젝트
 {
+    [SerializeField] private RectTransform rectTransform;
     private ProjectileSystem owner;
     private Vector3 startPos;
     private Vector3 direction;
@@ -18,7 +19,7 @@ public class Projectile : MonoBehaviour // 투사체 오브젝트
 
     public void Shoot(Vector2 start, Vector2 target, float damage, float speed)
     {
-        transform.position = start;
+        rectTransform.anchoredPosition = start;
         startPos = start;
         direction = (target - start).normalized;
         this.damage = damage;
@@ -31,7 +32,7 @@ public class Projectile : MonoBehaviour // 투사체 오브젝트
         if (owner.IsPause())
             return;
 
-        transform.position += direction * speed * Time.deltaTime;
+        rectTransform.anchoredPosition += (Vector2)direction * speed * Time.deltaTime;
 
         if(Vector3.Distance(startPos, transform.position) > 1500)
         {

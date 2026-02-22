@@ -6,6 +6,7 @@ public class PlayerStatsSystem : MonoBehaviour, ISubSystem // 플레이어 스�
 {
     private GameManager gameManager;
     [SerializeField] PlayerStatsUI playerStatsUI;
+    public RectTransform buffFXRect;
 
     private float normalDamage = 5f;
     private float normalAttackSpeed = 1f;

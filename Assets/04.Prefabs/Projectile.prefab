@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c0810581c034b44fb5a2f528242fdda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
+  rectTransform: {fileID: 6578418902196893338}
 --- !u!58 &6376800392427848863
 CircleCollider2D:
   m_ObjectHideFlags: 0

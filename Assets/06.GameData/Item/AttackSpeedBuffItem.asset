@@ -16,6 +16,7 @@ MonoBehaviour:
   title: "\uACF5\uACA9 \uC18D\uB3C4 10% \uBC84\uD504"
   description: "10\uCD08\uAC04 \uACF5\uACA9 \uC18D\uB3C4\uAC00 10% \uC99D\uAC00\uD55C\uB2E4"
   price: 10
+  particle: {fileID: 198351343057941686, guid: a46328f94e7a65d44a8345631190305a, type: 3}
   effect:
   - {fileID: 11400000, guid: ae7631ab7487e0848b833c004314502d, type: 2}
   duration: 10

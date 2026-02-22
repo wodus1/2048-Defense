@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlueMonster
   monsterAnimator: {fileID: 6958979206882969603}
-  Rect: {fileID: 0}
+  Rect: {fileID: 3563695933210879401}
   CurrentState: 0
 --- !u!114 &6958979206882969603
 MonoBehaviour:

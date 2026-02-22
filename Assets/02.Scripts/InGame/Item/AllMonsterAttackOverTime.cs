@@ -20,10 +20,19 @@ public class AllMonsterAttackOverTime : AttackOverTimeItemEffect // 모든 몬�
     private IEnumerator AttackExecute(ItemUseContext itemUseContext)
     {
         MonsterSystem monsterSystem = itemUseContext.MonstersSyetem;
+        FXSystem fxSystem = itemUseContext.FXSystem;
         WaitForSeconds wfs = new WaitForSeconds(interval);
         float duration = this.duration;
 
-        while(duration > 0)
+        FXInstance particle = null;
+        if (Particle != null)
+        {
+            RectTransform fxRect = monsterSystem.canvas.GetComponent<RectTransform>();
+            particle = fxSystem.PlayLoop(Particle, fxRect, new Vector2(0, 100f), Quaternion.identity);
+        }
+
+
+        while (duration > 0)
         {
             var monsterList = monsterSystem.Monsters.ToList();
             foreach (var monster in monsterList)
@@ -33,8 +42,11 @@ public class AllMonsterAttackOverTime : AttackOverTimeItemEffect // 모든 몬�
                 monster.TakeDamage(damage);
             }
 
-            duration -= 1;
+            duration -= interval;
             yield return wfs;
         }
+
+        if(particle != null)
+            fxSystem.StopLoop(particle);
     }
 }

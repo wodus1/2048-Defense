@@ -6,11 +6,13 @@ public abstract class ItemEffect : ScriptableObject // 아이템 추상 클래�
     [SerializeField] private string title;
     [SerializeField] private string description;
     [SerializeField] private string price;
+    [SerializeField] private ParticleSystem particle;
 
     public string Title => title;
     public string Description => description;
     public Sprite Item => item;
     public string Price => price;
+    public ParticleSystem Particle => particle;
 
     public abstract void Execute(ItemUseContext itemUseContext);
 }

@@ -12,7 +12,6 @@ public class MonsterSystem : MonoBehaviour, ISubSystem // 몬스터 시스템
     [SerializeField] private Monster[] monsterPrefabs;
     [SerializeField] private Transform monsterRoot;
     [SerializeField] private MonsterSystemUI monsterSystemUI;
-    [SerializeField] private Canvas canvas;
 
     private List<Monster> monsters = new List<Monster>();
     private Vector2[] spawnPositons;
@@ -23,6 +22,7 @@ public class MonsterSystem : MonoBehaviour, ISubSystem // 몬스터 시스템
     private Coroutine currentCoroutine;
     private Rect safeAreaRect;
 
+    public Canvas canvas;
     public List<Monster> Monsters => monsters;
 
     public void Start()

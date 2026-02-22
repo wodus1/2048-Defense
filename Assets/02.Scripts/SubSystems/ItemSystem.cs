@@ -6,6 +6,7 @@ public class ItemSystem : MonoBehaviour, ISubSystem // 아이템 시스템
     private GameManager gameManager;
     private PlayerStatsSystem playerStatsSystem;
     private MonsterSystem monsterSystem;
+    private FXSystem fxSystem;
 
     [SerializeField] private List<ItemButtonUI> itemButtons = new List<ItemButtonUI>();
 
@@ -14,7 +15,8 @@ public class ItemSystem : MonoBehaviour, ISubSystem // 아이템 시스템
         this.gameManager = gameManager;
         playerStatsSystem = this.gameManager.SubSystemsManager.GetSubSystem<PlayerStatsSystem>();
         monsterSystem = this.gameManager.SubSystemsManager.GetSubSystem<MonsterSystem>();
-
+        fxSystem = this.gameManager.SubSystemsManager.GetSubSystem<FXSystem>();
+        
         for (int i = 0; i < SaveManager.Instance.PlayerData.equipped.Length; i++)
         {
             string title = SaveManager.Instance.PlayerData.equipped[i];
@@ -38,7 +40,7 @@ public class ItemSystem : MonoBehaviour, ISubSystem // 아이템 시스템
 
     public void Execute(ItemEffect effect)
     {
-        ItemUseContext itemUseContext = new ItemUseContext(playerStatsSystem, monsterSystem, new object());
+        ItemUseContext itemUseContext = new ItemUseContext(playerStatsSystem, monsterSystem, fxSystem, new object());
         SaveManager.Instance.PlayerData.TryConsumeItem(effect.Title, 1);
         effect.Execute(itemUseContext);
     }

@@ -61,7 +61,7 @@ public abstract class Monster : MonoBehaviour // 몬스터 추상 클래스
 
     public void MoveTo(Vector2 dir)
     {
-        transform.position += (Vector3)(dir * NormalSpeed * Time.deltaTime);
+        Rect.anchoredPosition += dir * NormalSpeed * Time.deltaTime;
     }
 
     public bool IsVisible()
