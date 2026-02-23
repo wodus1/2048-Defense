@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq.Expressions;
+using UnityEngine;
 
 
 public class FXSystem : MonoBehaviour, ISubSystem // FX 시스템
@@ -6,13 +7,16 @@ public class FXSystem : MonoBehaviour, ISubSystem // FX 시스템
     private GameManager gameManager;
     private PoolingSystem poolingSystem;
 
+    [SerializeField] private ParticleSystem goldParticle;
     [SerializeField] private Transform root;
+    [SerializeField] private RectTransform rectRoot;
     [SerializeField] private Camera worldCamera;
 
     public void Initialize(GameManager gameManager)
     {
         this.gameManager = gameManager;
         poolingSystem = gameManager.SubSystemsManager.GetSubSystem<PoolingSystem>();
+        poolingSystem.CreateFXPool(goldParticle, rectRoot, 5);
     }
 
     public void Deinitialize()
@@ -48,6 +52,18 @@ public class FXSystem : MonoBehaviour, ISubSystem // FX 시스템
 
         instance.Play();
         return instance;
+    }
+
+    public void GoldPlay(Vector2 targetPos)
+    {
+        var fx = poolingSystem.GetFXPool(goldParticle);
+        var instance = fx.GetComponent<FXInstance>();
+        var goldParitcleUI = fx.GetComponent<GoldParticleUI>();
+
+        goldParitcleUI.Initialize(targetPos);
+        instance.Initialize(this, goldParticle, false);
+
+        instance.Play();
     }
 
     public void Return(ParticleSystem key, ParticleSystem instance)

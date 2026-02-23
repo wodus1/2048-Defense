@@ -74,5 +74,6 @@ public class BugMonster : Monster // 공중 몬스터 오브젝트
     public void RetrunToPool()
     {
         monsterSystem.ReturnToPool(this);
+        monsterSystem.GetGold(Rect.anchoredPosition);
     }
 }

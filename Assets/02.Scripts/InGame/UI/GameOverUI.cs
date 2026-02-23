@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -7,7 +8,8 @@ public class GameOverUI : MonoBehaviour // 게임 오버 ui view
     private GameManager gameManager;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button lobbyButton;
-    public GameObject GameOverPanel;
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private TMP_Text goldText;
 
     public void Initialize(GameManager gameManager)
     {
@@ -20,10 +22,17 @@ public class GameOverUI : MonoBehaviour // 게임 오버 ui view
         lobbyButton.onClick.AddListener(OnClickLobbyButton);
     }
 
+    public void SetOn(int gold)
+    {
+        SaveManager.Instance.PlayerData.AddGold(gold);
+        goldText.SetText($"+{gold}");
+        gameOverPanel.SetActive(true);
+    }
+
     private void OnClickRestartButton()
     {
         gameManager.InitGameSetting();
-        GameOverPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
     }
 
     private void OnClickLobbyButton()

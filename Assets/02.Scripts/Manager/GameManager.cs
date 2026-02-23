@@ -75,8 +75,8 @@ public class GameManager : MonoBehaviour // 게임 매니저(2048 로직)
 
     public void OnGameOver()
     {
+        gameOverUI.SetOn(subSystemsManager.GetSubSystem<MonsterSystem>().GetGoldInt());
         subSystemsManager.Deinitialize();
-        gameOverUI.GameOverPanel.SetActive(true);
         Pause();
 
         SaveManager.Instance.PlayerData.OnChanged?.Invoke();

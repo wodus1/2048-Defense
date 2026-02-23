@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MonsterSystem : MonoBehaviour, ISubSystem // 몬스터 시스템
@@ -8,6 +10,7 @@ public class MonsterSystem : MonoBehaviour, ISubSystem // 몬스터 시스템
     private PoolingSystem poolingSystem;
     private LevelSystem levelSystem;
     private HpSystem hpSystem;
+    private FXSystem fxSystem;
 
     [SerializeField] private Monster[] monsterPrefabs;
     [SerializeField] private Transform monsterRoot;
@@ -21,6 +24,7 @@ public class MonsterSystem : MonoBehaviour, ISubSystem // 몬스터 시스템
     private float breakTime = 10.0f;
     private Coroutine currentCoroutine;
     private Rect safeAreaRect;
+    private int gold = 0;
 
     public Canvas canvas;
     public List<Monster> Monsters => monsters;
@@ -42,6 +46,7 @@ public class MonsterSystem : MonoBehaviour, ISubSystem // 몬스터 시스템
         poolingSystem = this.gameManager.SubSystemsManager.GetSubSystem<PoolingSystem>();
         levelSystem = this.gameManager.SubSystemsManager.GetSubSystem<LevelSystem>();
         hpSystem = this.gameManager.SubSystemsManager.GetSubSystem<HpSystem>();
+        fxSystem = this.gameManager.SubSystemsManager.GetSubSystem<FXSystem>();
 
         foreach (Monster monster in monsterPrefabs)
         {
@@ -59,6 +64,7 @@ public class MonsterSystem : MonoBehaviour, ISubSystem // 몬스터 시스템
             }
         }
 
+        gold = 0;
         currentCoroutine = StartCoroutine(WaveLoop());
     }
 
@@ -173,6 +179,21 @@ public class MonsterSystem : MonoBehaviour, ISubSystem // 몬스터 시스템
         monsters.Remove(monster);
     }
 
+    public void GetGold(Vector2 targetPos)
+    {
+        float f = Random.Range(0, 1f);
+        if (f <= 0.25f)
+        {
+            fxSystem.GoldPlay(targetPos);
+            gold += 5;
+        }
+    }
+
+    public int GetGoldInt()
+    {
+        return gold;
+    }
+        
     public bool IsPause()
     {
         if (gameManager == null)
