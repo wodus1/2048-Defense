@@ -6125,12 +6125,12 @@ RectTransform:
   - {fileID: 387193973}
   - {fileID: 959492399}
   - {fileID: 1833938211}
-  - {fileID: 1037991793}
-  - {fileID: 713353120}
-  - {fileID: 1408387554}
-  - {fileID: 1640200207}
-  - {fileID: 80594154}
   - {fileID: 28607353}
+  - {fileID: 1037991793}
+  - {fileID: 80594154}
+  - {fileID: 713353120}
+  - {fileID: 1640200207}
+  - {fileID: 1408387554}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

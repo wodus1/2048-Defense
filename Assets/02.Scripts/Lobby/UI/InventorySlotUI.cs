@@ -38,11 +38,15 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!HasItem) return;
+
         dragGhostController.SetScreenPosition(eventData.position, eventData.pressEventCamera);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!HasItem) return;
+
         if (dragGhostController.IsDragging)
             dragGhostController.End();
     }
