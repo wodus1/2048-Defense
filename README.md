@@ -2,8 +2,8 @@
 **2048 퍼즐과 디펜스를 결합한 하이브리드 캐주얼 게임입니다**  
 2048 타일을 합쳐 경험치를 모으고, 레벨업 시 랜덤 강화 효과를 선택하여 강해지고 아이템을 사용하여 몰려오는 몬스터 웨이브를 막아냅니다
 
-<img width="370" height="655" alt="image" src="https://github.com/user-attachments/assets/76d576e4-51c7-45e0-8715-4a3f2bad2283" />
-<img width="370" height="657" alt="image" src="https://github.com/user-attachments/assets/ab10aec1-30d3-4a9f-8864-806f485df583" />
+<img width="371" height="654" alt="화면 캡처 2026-02-23 184519" src="https://github.com/user-attachments/assets/1c519d5f-aa46-4112-b8d2-71d53b90b1b3" />
+<img width="370" height="654" alt="화면 캡처 2026-02-23 184844" src="https://github.com/user-attachments/assets/740c6c17-9034-4173-951b-3310830967f2" />
 
 ## ▶ 목차
 - [주요 기능](#-주요-기능)
